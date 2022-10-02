@@ -13,4 +13,14 @@
 		SELECT COUNT(*) FROM MEMBER_TBL
 		WHERE NICKNAME=#{combineNickname}
 	</select>
+	
+	<select id="selectCheckId" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER_TBL
+		WHERE MEMBER_ID=#{inputId}
+	</select>
+	
+	<insert id="insertMember">
+		INSERT INTO MEMBER_TBL 
+		VALUES(#{memberId},#{nickName},#{memberPwd})
+	</insert>
 </mapper>

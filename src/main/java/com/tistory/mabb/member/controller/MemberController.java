@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.JsonObject;
 import com.tistory.mabb.member.domain.FirstKeyword;
+import com.tistory.mabb.member.domain.Member;
 import com.tistory.mabb.member.domain.SecondKeyword;
 import com.tistory.mabb.member.domain.ThirdKeyword;
 import com.tistory.mabb.member.service.MemberService;
@@ -33,18 +35,38 @@ public class MemberController {
 		return mv;
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="/member/idCheck.do",method=RequestMethod.POST)
-	public JsonObject idCheck(@RequestParam("inputId") String inputId) {
-		System.out.println(inputId);
-		JsonObject jsonObject = new JsonObject();
-		
-		return jsonObject;
-	}
+	@RequestMapping(value="/member/nickname/register.do",method=RequestMethod.POST)
+		public ModelAndView registerMember(ModelAndView mv,
+				@ModelAttribute Member member) {
+			
+			int result = mService.registerMember(member);
+			if(result>0) {
+				mv.addObject("msg","회원가입").
+				addObject("url","/").
+				setViewName("/common/alert");
+			}
+			
+			return mv;
+		}
+	
 	
 	
 	/**
-	 * 닉네임 중복방지 랜덤생성. ajax
+	 * 아이디 중복 체크 ajax
+	 * @param inputId
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/member/idCheck.do",method=RequestMethod.POST)
+	public JsonObject idCheck(@RequestParam("inputId") String inputId) {
+		JsonObject jsonObject = new JsonObject();
+		int result = mService.checkId(inputId);
+		jsonObject.addProperty("idCheckResult", result);
+		return jsonObject;
+	}
+	
+	/**
+	 * 닉네임 중복체크 및 랜덤생성 ajax
 	 * @param mv
 	 * @return
 	 */

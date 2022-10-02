@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.tistory.mabb.member.domain.FirstKeyword;
+import com.tistory.mabb.member.domain.Member;
 import com.tistory.mabb.member.domain.SecondKeyword;
 import com.tistory.mabb.member.domain.ThirdKeyword;
 import com.tistory.mabb.member.store.MemberStore;
@@ -33,4 +34,13 @@ public class MemberStoreLogic implements MemberStore{
 		return session.selectOne("Membermapper.selectCheckNickname", combineNickname);
 	}
 
+	@Override
+	public int checkId(SqlSession session, String inputId) {
+		return session.selectOne("Membermapper.selectCheckId", inputId);
+	}
+
+	@Override
+	public int insertMember(SqlSession session, Member member) {
+		return session.insert("Membermapper.insertMember", member);
+	}
 }
