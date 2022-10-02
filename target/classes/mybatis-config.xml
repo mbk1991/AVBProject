@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	<typeAliases>
+		<typeAlias type="com.tistory.mabb.member.domain.Member" 		alias="Member"/>
+		<typeAlias type="com.tistory.mabb.avb.domain.VoteBoard" 		alias="VoteBoard"/>
+		<typeAlias type="com.tistory.mabb.member.domain.FirstKeyword" 	alias="FirstKeyword"/>
+		<typeAlias type="com.tistory.mabb.member.domain.SecondKeyword" 	alias="SecondKeyword"/>
+		<typeAlias type="com.tistory.mabb.member.domain.ThirdKeyword" 	alias="ThirdKeyword"/>
+	</typeAliases>
+	 <mappers>
+	   <mapper resource="mappers/member-mapper.xml"/>
+	   <mapper resource="mappers/vote-mapper.xml"/>
+	   <mapper resource="mappers/first-mapper.xml"/>
+	   <mapper resource="mappers/second-mapper.xml"/>
+	   <mapper resource="mappers/third-mapper.xml"/>
+	 </mappers>
+</configuration>
