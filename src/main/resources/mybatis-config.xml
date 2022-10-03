@@ -7,11 +7,11 @@
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
 	<typeAliases>
-		<typeAlias type="com.tistory.mabb.member.domain.Member" 		alias="Member"/>
-		<typeAlias type="com.tistory.mabb.avb.domain.VoteBoard" 		alias="VoteBoard"/>
-		<typeAlias type="com.tistory.mabb.member.domain.FirstKeyword" 	alias="FirstKeyword"/>
-		<typeAlias type="com.tistory.mabb.member.domain.SecondKeyword" 	alias="SecondKeyword"/>
-		<typeAlias type="com.tistory.mabb.member.domain.ThirdKeyword" 	alias="ThirdKeyword"/>
+		<typeAlias type="com.tistory.mabb.avb.member.domain.Member" 		alias="Member"/>
+		<typeAlias type="com.tistory.mabb.avb.member.domain.FirstKeyword" 	alias="FirstKeyword"/>
+		<typeAlias type="com.tistory.mabb.avb.member.domain.SecondKeyword" 	alias="SecondKeyword"/>
+		<typeAlias type="com.tistory.mabb.avb.member.domain.ThirdKeyword" 	alias="ThirdKeyword"/>
+		<typeAlias type="com.tistory.mabb.avb.board.domain.VoteBoard" 		alias="VoteBoard"/>
 	</typeAliases>
 	 <mappers>
 	   <mapper resource="mappers/member-mapper.xml"/>

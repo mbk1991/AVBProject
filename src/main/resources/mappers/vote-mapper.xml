@@ -2,6 +2,51 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
 <mapper namespace="VoteMapper">
 
+	 <resultMap type="VoteBoard" id="VoteResultMap">
+	 	<id		column="VOTE_NO"		    property="voteNo"/>
+	 	<result column="VOTE_WRITER" 		property="voteWriter"/>
+	 	<result column="VOTE_TITLE"		    property="voteTitle"/>
+	 	<result column="VOTE_CONTENTS" 		property="voteContents"/>
+	 	<result column="VOTE_END" 			property="voteEnd"/>
+	 	<result column="VIEW_COUNT" 		property="viewCount"/>
+	 	<result column="REPLY_COUNT" 		property="replyCount"/>
+	 	<result column="FIRST_LABEL"	    property="firstLabel"/>
+	 	<result column="SECOND_LABEL" 		property="secondLabel"/>
+	 	<result column="THIRD_LABEL" 		property="thirdLabel"/>
+	 	<result column="FOURTH_LABEL" 		property="fourthLabel"/>
+	 	<result column="FIFTH_LABEL" 		property="fifthLabel"/>
+	 	<result column="FIRST_COUNT" 		property="firstCount"/>
+	 	<result column="SECOND_COUNT" 		property="secondCount"/>
+	 	<result column="THIRD_COUNT" 		property="thirdCount"/>
+	 	<result column="FOURTH_COUNT"	    property="fourthCount"/>
+	 	<result column="FIFTH_COUNT" 		property="fifthCount"/>
+	 	<result column="SUM_COUNT"		    property="sumCount"/>
+	 	<result column="VOTE_TIME" 			property="voteTime"/>
+	 	<result column="VOTE_STATUS" 		property="voteStatus"/>
+	 	<result column="PARTICIPANT_LIMIT"	property="participantLimit"/>
+	 </resultMap>
+
+	<insert id="insertVote">
+		INSERT INTO VOTE_TBL
+		VALUES(SEQ_VOTE_NO.NEXTVAL,#{voteWriter},#{voteTitle},
+		#{voteContents},DEFAULT,DEFAULT,DEFAULT,#{firstLabel},
+		#{secondLabel},#{thirdLabel},#{fourthLabel},#{fifthLabel},
+		DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,#{participantLimit})
+	</insert>
+	
+	<select id="countAllVote" resultType="_int">
+		SELECT COUNT(*) FROM VOTE_TBL
+	</select>
+	
+	<select id="selectAllVote" resultMap="VoteResultMap">
+		SELECT * FROM VOTE_TBL
+	</select>
+	
+	<select id="selectCheckParticipant" resultType="_int">
+		SELECT COUNT(*) FROM PARTICIPANT_TBL
+		WHERE VOTE_NO = #{voteNo} AND PARTICIPANT = #{loginUserNickname}
+	</select>
 </mapper>

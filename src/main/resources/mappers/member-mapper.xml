@@ -19,8 +19,14 @@
 		WHERE MEMBER_ID=#{inputId}
 	</select>
 	
+	<select id="selectLoginMember" resultMap="MemberResultMap">
+		SELECT MEMBER_ID,NICKNAME 
+		FROM MEMBER_TBL
+		WHERE MEMBER_ID=#{memberId} AND MEMBER_PWD=#{memberPwd}
+	</select>
+	
 	<insert id="insertMember">
 		INSERT INTO MEMBER_TBL 
-		VALUES(#{memberId},#{nickName},#{memberPwd})
+		VALUES(#{memberId},#{nickName},#{memberPwd},SYSDATE)
 	</insert>
 </mapper>

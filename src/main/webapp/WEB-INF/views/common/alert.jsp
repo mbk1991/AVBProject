@@ -12,9 +12,9 @@
 
 </body>
 <script>
-	var msg = document.querySelector("#msg");
-	var url = document.querySelector("#url");
-	alert(msg + "되었습니다.");
+	var msg = document.querySelector("#msg").value;
+	var url = document.querySelector("#url").value;
+	alert(msg + "하였습니다.");
 	location.href=url;
 
 </script>
