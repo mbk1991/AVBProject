@@ -55,5 +55,4 @@ public class MemberServiceImpl implements MemberService{
 		return mStore.loginMember(session, member);
 	}
 
-
 }

@@ -28,10 +28,25 @@ public class AvbStoreLogic implements AvbStore{
 	}
 
 	@Override
-	public int selectParticipantCheck(SqlSession session, String loginUserNickname, int voteNo) {
-		HashMap<String,Integer> hashMap = new HashMap<>();
-		hashMap.put(loginUserNickname, voteNo);
+	public int selectParticipantCheck(SqlSession session, String loginUserNickname, Integer voteNo) {
+		HashMap<String,String> hashMap = new HashMap<>();
+		hashMap.put("loginUserNickname", loginUserNickname);
+		hashMap.put("voteNo",voteNo.toString());
 		return session.selectOne("VoteMapper.selectCheckParticipant",hashMap);
+	}
+
+	@Override
+	public VoteBoard selectOneVote(SqlSession session, int voteNo) {
+		return session.selectOne("VoteMapper.selectOneVote",voteNo);
+	}
+
+	@Override
+	public int updateCount(SqlSession session, String countLabel, Integer voteNo) {
+		HashMap<String,String> hashMap = new HashMap<String, String>();
+		hashMap.put("countLabel",countLabel);
+		hashMap.put("voteNo",voteNo.toString());
+		
+		return session.update("VoteMapper.updateCount", hashMap);
 	}
 
 }

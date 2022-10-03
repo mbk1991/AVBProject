@@ -32,7 +32,7 @@
                         <th>댓글수</th>
                     </tr>
 					<c:forEach items="${vList }"  var="vote" >
-	                    <tr onclick="location.href='/vote/detail.do?voteNo='+${vote.voteNo }+'voteWriter='+${vote.voteWriter }+'voteEnd='+${vote.voteEnd }+'';">
+	                    <tr onclick="location.href='/vote/detail.do?voteNo='+${vote.voteNo }+'';">
 	                    	<th>${vote.voteTitle }</th>
 	                    	<th>${vote.voteWriter }</th>
 	                    	<th>${vote.voteEnd }</th>

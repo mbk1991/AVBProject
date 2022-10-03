@@ -33,8 +33,18 @@ public class AvbServiceImpl implements AvbService {
 	}
 
 	@Override
-	public int participantCheck(String loginUserNickname, int voteNo) {
+	public int participantCheck(String loginUserNickname, Integer voteNo) {
 		return aStore.selectParticipantCheck(session, loginUserNickname, voteNo);
+	}
+
+	@Override
+	public VoteBoard printOneVote(int voteNo) {
+		return aStore.selectOneVote(session, voteNo);
+	}
+
+	@Override
+	public int addCount(String countLabel, Integer voteNo) {
+		return aStore.updateCount(session, countLabel, voteNo);
 	}
 
 }

@@ -43,10 +43,22 @@
 	
 	<select id="selectAllVote" resultMap="VoteResultMap">
 		SELECT * FROM VOTE_TBL
+		ORDER BY VOTE_TIME DESC
+	</select>
+	
+	<select id="selectOneVote" resultMap="VoteResultMap">
+		SELECT * FROM VOTE_TBL
+		WHERE VOTE_NO = #{voteNo}
 	</select>
 	
 	<select id="selectCheckParticipant" resultType="_int">
 		SELECT COUNT(*) FROM PARTICIPANT_TBL
 		WHERE VOTE_NO = #{voteNo} AND PARTICIPANT = #{loginUserNickname}
 	</select>
+	
+	<update id="updateCount">
+		UPDATE VOTE_TBL 
+		SET ${countLabel} = ${countLabel} + 1
+		WHERE VOTE_NO = #{voteNo}
+	</update>
 </mapper>
