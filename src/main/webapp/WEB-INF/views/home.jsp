@@ -12,8 +12,8 @@
 	        <c:if test="${loginUser eq null }">
 	        	<div id="input-wrap">
 		            <form action="/member/login.do" method="post">
-		                <input type="text" name="memberId" placeholder="아이디를 입력하세요.">
-		                <input type="password" name="memberPwd" placeholder="비밀번호를 입력하세요.">
+		                <input type="text" name="memberId" placeholder="아이디를 입력하세요." required>
+		                <input type="password" name="memberPwd" placeholder="비밀번호를 입력하세요." required>
 		          		<c:if test=""></c:if>
 		                <button>로그인</button>
 		                <button type="button" onclick="location.href='member/enrollView.do';">닉네임등록</button>

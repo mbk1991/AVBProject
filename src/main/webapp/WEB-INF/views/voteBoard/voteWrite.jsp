@@ -37,15 +37,17 @@
                     <input type="hidden" id="fourthLabel" class="addList" name="fourthLabel" placeholder="후보4" ><br>
                     <input type="hidden" id="fifthLabel"  class="addList" name="fifthLabel"  placeholder="후보5" ><br>
                 </div>
-                <button onclick="addList();">항목추가</button>
-                <button onclick="removeList();">항목제거</button>
+                <button type="button" onclick="addList();">항목추가</button>
+                <button type="button" onclick="removeList();">항목제거</button>
                 
                 <br>
                 <button>투표올리기</button>
             </form>
         </div>
     </div>
-    <div id="footer"></div>
+    <div id="footer">
+		<a href="/vote/list.do">목록으로</a>
+    </div>
 </body>
 <script>
 

@@ -49,6 +49,8 @@
             </div>
         </div>
     </div>
-    <div id="footer"></div>
+    <div id="footer">
+    	<a href="/">로그인화면으로</a>
+    </div>
 </body>
 </html>

@@ -77,6 +77,7 @@
         </div>
     </div>
     <div id="footer">
+  	  <a href="/vote/list.do">목록으로</a>
     </div>
 </body>
 <script>

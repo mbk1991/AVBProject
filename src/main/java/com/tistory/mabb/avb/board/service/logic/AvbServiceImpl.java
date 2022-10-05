@@ -43,8 +43,24 @@ public class AvbServiceImpl implements AvbService {
 	}
 
 	@Override
-	public int addCount(String countLabel, Integer voteNo) {
-		return aStore.updateCount(session, countLabel, voteNo);
+	public int addCount(String column, Integer voteNo) {
+		return aStore.updateCount(session, column, voteNo);
 	}
+
+	@Override
+	public int registerParticipant(String loginNickname, Integer voteNo, Integer voteCheck) {
+		return aStore.insertParticipant(session, loginNickname, voteNo, voteCheck);
+	}
+
+	@Override
+	public int sumCount(Integer voteNo) {
+		return aStore.updateSumCount(session, voteNo);
+	}
+
+	@Override
+	public int modifyVoteEnd(Integer voteNo) {
+		return aStore.updateVoteEnd(session, voteNo);
+	}
+
 
 }

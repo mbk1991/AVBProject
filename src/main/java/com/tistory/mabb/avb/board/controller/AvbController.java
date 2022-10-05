@@ -78,7 +78,8 @@ public class AvbController {
 	 * @return
 	 */
 	@RequestMapping(value = "/vote/detail.do", method = RequestMethod.GET)
-	public ModelAndView voteDetail(ModelAndView mv, @RequestParam("voteNo") Integer voteNo, HttpSession session) {
+	public ModelAndView voteDetail(ModelAndView mv, 
+			@RequestParam("voteNo") Integer voteNo, HttpSession session) {
 
 		// 1.게시물 번호와 로그인 유저의 아이디와 작성자의 아이디, 투표진행상태, 로그인 유저의 투표 여부가 필요하다
 		// 2.컨트롤러 단에서 조건에 따라 분기한다.
@@ -91,25 +92,24 @@ public class AvbController {
 		VoteBoard vote = aService.printOneVote(voteNo);
 		String voteEnd = vote.getVoteEnd();
 		String voteWriter = vote.getVoteWriter();
-
+		
 		if (!voteEnd.equals("Y")) {
-			// 투표 진행중
-			if (!voteWriter.equals(loginUserNickname)) {
-				// 작성자가 아닌유저의 조회
-				int result = aService.participantCheck(loginUserNickname, voteNo);
-				if (result > 0) {
-					// 이미 투표 참여 투표 대기화면 노출
-
-					mv.addObject("vote", vote).setViewName("/voteBoard/voteWating");
+				// 투표 진행중
+				if (!voteWriter.equals(loginUserNickname)) {
+					// 작성자가 아닌유저의 조회
+					int result = aService.participantCheck(loginUserNickname, voteNo);
+					if (result > 0) {
+						// 이미 투표 참여 투표 대기화면 노출
+						mv.addObject("vote", vote).setViewName("/voteBoard/voteWaiting");
+					} else {
+						// 투표 미참여 투표화면 노출
+						mv.addObject("vote", vote).setViewName("/voteBoard/voteJoin");
+					}
+	
 				} else {
-					// 투표 미참여 투표화면 노출
-					mv.addObject("vote", vote).setViewName("/voteBoard/voteJoin");
+					// 투표 진행 중 작성자의 조회: 투표 대기화면 노출
+					mv.addObject("vote", vote).setViewName("/voteBoard/voteWaiting");
 				}
-
-			} else {
-				// 투표 진행 중 작성자의 조회 투표 대기화면 노출
-				mv.addObject("vote", vote).setViewName("/voteBoard/voteWaiting");
-			}
 		} else {
 			// 투표 완료/ 완료화면
 			mv.addObject("vote", vote).setViewName("/voteBoard/voteComplite");
@@ -117,36 +117,90 @@ public class AvbController {
 
 		return mv;
 	}
+	
+	/**
+	 * 집계
+	 */
+	public void voteAggregation(VoteBoard vote) {
+		int first = vote.getFirstCount();
+		int second = vote.getSecondCount();
+		int third = vote.getThirdCount();
+		int fourth = vote.getFourthCount();
+		int fifth = vote.getFifthCount();
+		String firstLabel = vote.getFirstLabel();
+		String secondLabel = vote.getSecondLabel();
+		String thirdLabel = vote.getThirdLabel();
+		String fourthLabel = vote.getFourthLabel();
+		String fifthLabel = vote.getFifthLabel();
+		
+	}
+	
+	
+	
 
+	/**
+	 * 투표하기 버튼 클릭 시 로직
+	 * 투표를 할 수 있는 화면은 투표를 하지 않은 사람만 접근이 가능하다.
+	 * @param mv
+	 * @param voteCheck
+	 * @param voteNo
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "/vote/join.do", method = RequestMethod.POST)
 	public ModelAndView voteJoin(ModelAndView mv,
 			@RequestParam("voteCheck") Integer voteCheck,
-			@RequestParam("voteNo") Integer voteNo) {
-
-		String countLabel = "";
+			@RequestParam("voteNo") Integer voteNo,
+			HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String loginNickname = loginUser.getNickName();
+		
+		
+		//1.화면에서 라디오로 입력받은 값에 따라 해당되는 
+		//컬럼에 카운팅을 해준다. 컬럼명을 저장하는 부분.
+		String column = "";
 		switch (voteCheck) {
 		case 1:
-			countLabel = "FIRST_COUNT";
+			column = "FIRST_COUNT";
 			break;
 		case 2:
-			countLabel = "SECOND_COUNT";
+			column = "SECOND_COUNT";
 			break;
 		case 3:
-			countLabel = "THIRD_COUNT";
+			column = "THIRD_COUNT";
 			break;
 		case 4:
-			countLabel = "FOURTH_COUNT";
+			column = "FOURTH_COUNT";
 			break;
 		case 5:
-			countLabel = "FIFTH_COUNT";
+			column = "FIFTH_COUNT";
 			break;
 		}
 		
-		//1.투표 카운팅
-		int result = aService.addCount(countLabel,voteNo);
+		//2.투표한 번호 카운트.
+		int result = aService.addCount(column,voteNo);
 		if (result > 0) {
-			//2.성공 시 투표자 등록
-			
+			//3. 투표 합계 업데이트
+			int sumResult = aService.sumCount(voteNo);
+			if(sumResult>0) {
+				
+				//4.성공 시 투표자 등록
+				int registerResult = aService.registerParticipant(loginNickname,voteNo,voteCheck);
+				if(registerResult > 0) {
+					// 5.투표자수를 확인하여 투표종료여부를 'Y'로 바꾼다.
+					VoteBoard thisVote = aService.printOneVote(voteNo);
+					int sumCount = thisVote.getSumCount();
+					int participantLimit = thisVote.getParticipantLimit();
+					if(sumCount == participantLimit) {
+						int voteEndResult = aService.modifyVoteEnd(voteNo);
+						mv.setViewName("redirect:/vote/detail.do?voteNo="+voteNo);
+						return mv;
+					}
+					
+					//6.투표 참여자 등록 성공 시
+					mv.setViewName("redirect:/vote/detail.do?voteNo="+voteNo);
+				}
+			}
 		} else {
 
 		}

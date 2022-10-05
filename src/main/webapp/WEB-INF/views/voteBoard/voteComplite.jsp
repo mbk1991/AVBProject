@@ -38,13 +38,15 @@
             </div>
 <!-- 투표 영역 -->
             <div id="vote-area">
-            
+            	
             </div>
 <!-- 댓글 -->
             <div id="reply">
             </div>
         </div>
     </div>
-    <div id="footer"></div>
+    <div id="footer">
+    	<a href="/vote/list.do">목록으로</a>
+    </div>
 </body>
 </html>

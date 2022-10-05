@@ -8,7 +8,7 @@ public class VoteBoard {
 	private String voteWriter; // 작성자 닉네임
 	private String voteTitle; // 제목
 	private String voteContents; // 내용
-	private String voteEnd; // 투표 진행상태
+	private String voteEnd; // 투표 종료여부
 	private int viewCount; // 조회수
 	private int replyCount; //댓글수 트리거로
 	private String firstLabel;//항목1 라벨

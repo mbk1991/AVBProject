@@ -37,6 +37,11 @@
 		DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,#{participantLimit})
 	</insert>
 	
+	<insert id="insertParticipant">
+		INSERT INTO PARTICIPANT_TBL
+		VALUES(#{voteNo},#{loginNickname},#{voteCheck})
+	</insert>
+	
 	<select id="countAllVote" resultType="_int">
 		SELECT COUNT(*) FROM VOTE_TBL
 	</select>
@@ -56,9 +61,21 @@
 		WHERE VOTE_NO = #{voteNo} AND PARTICIPANT = #{loginUserNickname}
 	</select>
 	
-	<update id="updateCount">
-		UPDATE VOTE_TBL 
-		SET ${countLabel} = ${countLabel} + 1
+	<update id="updateCount" parameterType="hashMap">
+		UPDATE VOTE_TBL
+		SET ${column}=${column}+1
+		WHERE VOTE_NO=#{voteNo}
+	</update>
+	
+	<update id="updateSumCount">
+		UPDATE VOTE_TBL
+		SET SUM_COUNT = FIRST_COUNT + SECOND_COUNT + THIRD_COUNT + FOURTH_COUNT + FIFTH_COUNT
+		WHERE VOTE_NO = #{voteNo}
+	</update>
+	
+	<update id="updateVoteEnd">
+		UPDATE VOTE_TBL
+		SET VOTE_END = 'Y'
 		WHERE VOTE_NO = #{voteNo}
 	</update>
 </mapper>
