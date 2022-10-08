@@ -11,11 +11,12 @@ public class VoteReply {
     private String replyContents;  // 댓글 내용
     private Timestamp replyTime; //댓글 작성 시각
     private String rStatus ;// 댓글 삭제 여부 N디폴트.
+    private String memberId;
     
     public VoteReply() {}
 
 	public VoteReply(int replyNo, int voteNo, int refReplyNo, String reReplyYn, String replyWriter,
-			String replyContents, Timestamp replyTime, String rStatus) {
+			String replyContents, Timestamp replyTime, String rStatus, String memberId) {
 		super();
 		this.replyNo = replyNo;
 		this.voteNo = voteNo;
@@ -25,6 +26,7 @@ public class VoteReply {
 		this.replyContents = replyContents;
 		this.replyTime = replyTime;
 		this.rStatus = rStatus;
+		this.memberId = memberId;
 	}
 
 	public int getReplyNo() {
@@ -91,14 +93,21 @@ public class VoteReply {
 		this.rStatus = rStatus;
 	}
 
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+
 	@Override
 	public String toString() {
 		return "VoteReply [replyNo=" + replyNo + ", voteNo=" + voteNo + ", refReplyNo=" + refReplyNo + ", reReplyYn="
 				+ reReplyYn + ", replyWriter=" + replyWriter + ", replyContents=" + replyContents + ", replyTime="
-				+ replyTime + ", rStatus=" + rStatus + "]";
+				+ replyTime + ", rStatus=" + rStatus + ", memberId=" + memberId + "]";
 	}
-    
+
 	
-    
     
 }

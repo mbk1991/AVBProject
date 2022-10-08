@@ -13,6 +13,7 @@
 		<result column="REPLY_CONTENTS"  	property="replyContents"/>
 		<result column="REPLY_TIME"  		property="replyTime"/>
 		<result column="R_STATUS" 			property="rStatus"/>
+		<result column="MEMBER_ID"   		property="memberId"/>
 	</resultMap>
 
 	<select id="selectOriginalReply" resultMap="vReplyResultMap">
@@ -27,12 +28,12 @@
 	
 	<insert id="insertOriginalReply">
 		INSERT INTO REPLY_TBL 
-		VALUES(SEQ_REPLY_NO.NEXTVAL,#{voteNo},DEFAULT,'N',#{replyWriter},#{replyContents},DEFAULT,DEFAULT)
+		VALUES(SEQ_REPLY_NO.NEXTVAL,#{voteNo},DEFAULT,'N',#{replyWriter},#{replyContents},DEFAULT,DEFAULT,#{memberId})
 	</insert>
 	
 	<insert id="insertReReply">
 		INSERT INTO REPLY_TBL
-		VALUES(SEQ_REPLY_NO.NEXTVAL,#{voteNo},#{refReplyNo},'Y',#{replyWriter},#{replyContents},DEFAULT,DEFAULT)
+		VALUES(SEQ_REPLY_NO.NEXTVAL,#{voteNo},#{refReplyNo},'Y',#{replyWriter},#{replyContents},DEFAULT,DEFAULT,#{memberId})
 	</insert>
 	
 	<update id="updateReply">

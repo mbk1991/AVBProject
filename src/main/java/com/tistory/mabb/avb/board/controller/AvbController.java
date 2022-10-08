@@ -12,9 +12,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.tistory.mabb.avb.board.domain.VoteBoard;
+import com.tistory.mabb.avb.board.domain.VoteReply;
 import com.tistory.mabb.avb.board.service.AvbService;
 import com.tistory.mabb.avb.member.domain.Member;
 
@@ -212,4 +216,66 @@ public class AvbController {
 
 		return mv;
 	}
+	
+	
+//댓글////////////////////////////////////
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/reply/registerOrigin.do",method=RequestMethod.POST)
+	public String registerOriginalReply(@ModelAttribute VoteReply vReply) {
+		
+		System.out.println(vReply.toString());
+		
+		int result = aService.registerOriginalReply(vReply);
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/reply/registerReReply.do",method=RequestMethod.POST)
+	public String registerReReply(@ModelAttribute VoteReply vReply) {
+		
+		System.out.println(vReply.toString());
+		
+		int result = aService.registerReReply(vReply);
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/reply/list.do",produces="application/json;charset=utf-8", method=RequestMethod.GET)
+	public String replyList(@RequestParam("voteNo") Integer voteNo) {
+		
+		System.out.println(voteNo);
+		
+		List<VoteReply> vList = aService.printOriginalReply(voteNo);
+		if(!vList.isEmpty()) {
+			
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
+			return gson.toJson(vList);
+		}else {
+			return null;
+		}
+	}
+//	@ResponseBody
+//	@RequestMapping(value="",method=RequestMethod.GET)
+//	public void modifyReply() {
+//		
+//		
+//	}
+//	@ResponseBody
+//	@RequestMapping(value="",method=RequestMethod.GET)
+//	public void deleteReply() {
+//		
+//		
+//	}
+	
 }

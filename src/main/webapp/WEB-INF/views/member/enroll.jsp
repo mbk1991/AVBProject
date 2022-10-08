@@ -122,7 +122,7 @@ function randomNick(){
 		}
 	
 		//3.open()메소드, (post방식 시 header설정), send()메소드를 이용하여 요청한다.
-		xhr.open("POST","/member/nickname/make.do")
+		xhr.open("POST","/member/nickname/make.do");
 		xhr.setRequestHeader("Content-type","application/json");
 		xhr.send();
 	}

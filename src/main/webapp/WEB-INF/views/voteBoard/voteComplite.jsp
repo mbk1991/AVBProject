@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 <body>
     <div id="header"></div>
@@ -86,7 +87,8 @@
 <!-- 댓글 -->
             <div id="reply">
                 <div id="replyInput">
-	            	<input type="text" name="replyContents" placeholder="댓글을 입력해보세요" >
+	            	<input id="replyContents" type="text" name="replyContents" placeholder="댓글을 입력해보세요" >
+	            	<button id="submitReply" type="button">댓글등록</button>
 	            </div>
             	<div id="replyList">
 					<li class="Reply">
@@ -109,7 +111,7 @@
 							
 <!-- 답글 입력창					 -->
 							<div>
-								<input type="text" name="replyContents" placeholder="답글을 입력해보세요" >
+								<input type="text" name="reReplyContents" placeholder="답글을 입력해보세요" >
 							</div>
 						</div>
 						
@@ -124,6 +126,153 @@
     </div>
 </body>
 <script>
+
+//댓글 리스트 출력 함수. 
+	var $replyList =  $("#replyList");
+	$replyList.html("");
+	printReplyList();
+
+	function printReplyList(){
+		var voteNo = "${vote.voteNo}";
+		$.ajax({
+			url:"/reply/list.do",
+			data:{
+				"voteNo":voteNo
+			},
+			type:"get",
+			success:function(vList){
+				if(vList!=null){
+					for(var i in vList){
+						var $li = $("<li class='reply'>");
+						var $divInfo = $("<div class='info'>").html("<div>"+vList[i].replyWriter+"</div><div>"+vList[i].replyTime+"</div>");
+						var $divContents =$("<div class='contents'>").text(vList[i].replyContents);
+						var $arcodianReReply = $("<a href='#' onclick=';'>").text("답글 달기");
+						var $divReReplyArea = $("<div class='reReply-area'>").html("<input type='text' placeholder='답글을 입력해보세요.'><button onclick='submitReReply(this,"+vList[i].replyNo+");'>답글등록</button>");
+						
+						$li.append($divInfo);
+						$li.append($divContents);
+						$li.append($arcodianReReply);
+						$li.append($divReReplyArea);
+						$replyList.append($li);
+					}
+				}
+			},
+			error:function(){}
+		});
+	}
+//댓글 등록버튼 이벤트
+	var submitReply = $("#submitReply").on("click",function(){
+		
+		var voteNo = "${vote.voteNo}";
+		var replyMemberId = "${loginUser.memberId}";
+		var replyWriter = "${loginUser.nickName}";
+		var replyContents = document.querySelector("#replyContents").value;
+		
+		$.ajax({
+			url:"/reply/registerOrigin.do",
+			data:{
+					"voteNo":voteNo,
+					"memberId":replyMemberId,
+					"replyWriter":replyWriter,
+					"replyContents":replyContents
+				  },
+			type:"post",
+			success:function(result){
+				if(result == "success"){
+					console.log("확인");
+					
+					$replyList.html("");
+					printReplyList();
+				}else{
+					console.log("실패");
+				}
+			},
+			error:function(){}
+			
+		});
+		
+	});
+
+//답글 등록버튼 onclick 이벤트 동작 함수
+	function submitReReply(thisButton,refReplyNo){
+
+		var voteNo = "${vote.voteNo}";
+		var replyMemberId = "${loginUser.memberId}";
+		var replyWriter = "${loginUser.nickName}";
+		var replyContents = thisButton.previousSibling.value;
+		console.log(replyContents);
+		
+		$.ajax({
+			url:"/reply/registerReReply.do",
+			data:{
+					"voteNo":voteNo,
+					"memberId":replyMemberId,
+					"replyWriter":replyWriter,
+					"replyContents":replyContents,
+					"refReplyNo":refReplyNo
+				  },
+			type:"post",
+			success:function(result){
+				if(result == "success"){
+					console.log("확인");
+					
+					$replyList.html("");
+					printReplyList();
+				}else{
+					console.log("실패");
+				}
+			},
+			error:function(){}
+			
+		});
+	
+
+		
+	}
+
+
+//바닐라js ajax 뭔가 잘 안됨..
+// 	var submitReply = document.querySelector("#submitReply");
+// 	submitReply.addEventListener("click",function(){
+// 		alert("!");
+		
+// 		var xhr = new XMLHttpRequest();
+// 		xhr.onload=function(){
+// 			if(xhr.readyState === 4){
+// 				if(xhr.status === 200){
+// 					if(xhr.response == "success"){
+// 						console.log("성공");
+// 					}else{
+// 						console.log("실패");
+// 					}
+// 				}else{
+// 				}			
+// 			}
+// 		}
+		
+// 		var voteNo = "${vote.voteNo}";
+// 		var replyMemberId = "${loginUser.memberId}";
+// 		var replyWriter = "${loginUser.nickName}";
+// 		var replyContents = document.querySelector("#replyContents").value;
+		
+// 		var jsonObj = {
+// 				"voteNo":voteNo,
+// 				"memberId":replyMemberId,
+// 				"replyWriter":replyWriter,
+// 				"replyContents":replyContents
+// 		}
+		
+// 		console.log(jsonObj);
+// 		var jsonSerialization = JSON.stringify(jsonObj);
+// 		console.log(jsonSerialization);
+		
+// 		console.log(encodeURIComponent(voteNo));
+		
+// 		xhr.open("post","/reply/register.do",true);
+// 		xhr.setRequestHeader("Content-type","application/json;charset=utf-8");
+// 		xhr.send(jsonSerialization);
+		
+// 	});
 
 </script>
 
