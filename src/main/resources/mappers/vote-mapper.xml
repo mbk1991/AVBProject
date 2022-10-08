@@ -27,6 +27,7 @@
 	 	<result column="VOTE_TIME" 			property="voteTime"/>
 	 	<result column="VOTE_STATUS" 		property="voteStatus"/>
 	 	<result column="PARTICIPANT_LIMIT"	property="participantLimit"/>
+	 	<result column="MEMBER_ID"			property="memberId"/>
 	 </resultMap>
 
 	<insert id="insertVote">
@@ -34,7 +35,7 @@
 		VALUES(SEQ_VOTE_NO.NEXTVAL,#{voteWriter},#{voteTitle},
 		#{voteContents},DEFAULT,DEFAULT,DEFAULT,#{firstLabel},
 		#{secondLabel},#{thirdLabel},#{fourthLabel},#{fifthLabel},
-		DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,#{participantLimit})
+		DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,#{participantLimit},#{memberId})
 	</insert>
 	
 	<insert id="insertParticipant">
@@ -44,6 +45,11 @@
 	
 	<select id="countAllVote" resultType="_int">
 		SELECT COUNT(*) FROM VOTE_TBL
+	</select>
+	
+	<select id="selectUserChoice" resultType="_int" parameterType="hashMap">
+		SELECT NVL(MAX(CHOICE_NO),0) FROM PARTICIPANT_TBL
+		WHERE VOTE_NO = #{voteNo} AND PARTICIPANT =#{voteWriterId}
 	</select>
 	
 	<select id="selectAllVote" resultMap="VoteResultMap">

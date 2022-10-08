@@ -32,16 +32,61 @@
 					</tr>
 					<tr>
 						<td>투표진행상태</td>
+						${userChoice }유저투표번호
 						<td>${vote.sumCount } / ${vote.participantLimit }</td>
 					</tr>            	
             	</table>
             </div>
 <!-- 투표 영역 -->
-            <div id="vote-area">
-            
+            <div id="result-area">
+            	<table id="resultTable"  border="1px">
+            		<tr>
+            			<th>항목</th>
+            			<th>나의 표</th>
+            			<th>득표수</th>
+            			<th>최다득표</th>
+            		</tr>
+            		<tr>
+            			<td>${vote.firstLabel }</td>
+            			<td><c:if test="${userChoice eq 1 }">V</c:if></td>
+            			<td>?</td>
+            			<td>?</td>
+            		</tr>
+               		<tr>
+            			<td>${vote.secondLabel }</td>
+            			<td><c:if test="${userChoice eq 2 }">V</c:if></td>
+            			<td>?</td>
+            			<td>?</td>
+            		</tr>
+            		<c:if test="${vote.thirdLabel ne null }">
+	            		<tr>
+	            			<td>${vote.thirdLabel }</td>
+	            			<td><c:if test="${userChoice eq 3 }">V</c:if></td>
+	            			<td>?</td>
+	            			<td>?</td>
+	            		</tr>
+	            	</c:if>
+	            	<c:if test="${vote.fourthLabel ne null }">
+            		<tr>
+            			<td>${vote.fourthLabel }</td>
+            			<td><c:if test="${userChoice eq 4 }">V</c:if></td>
+            			<td>?</td>
+            			<td>?</td>
+            		</tr>
+            		</c:if>
+            		<c:if test="${vote.fifthLabel ne null }">
+            		<tr>
+            			<td>${vote.fifthLabel }</td>
+            			<td><c:if test="${userChoice eq 5 }">V</c:if></td>
+            			<td>?</td>
+            			<td>?</td>
+            		</tr>
+            		</c:if>
+            	</table>
             </div>
 <!-- 댓글 -->
             <div id="reply">
+            	<span>투표가 완료되면 댓글창이 오픈됩니다!</span>
             </div>
         </div>
     </div>

@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.tistory.mabb.avb.board.domain.VoteBoard;
+import com.tistory.mabb.avb.board.domain.VoteReply;
 import com.tistory.mabb.avb.board.store.AvbStore;
 
 @Repository
@@ -70,6 +71,52 @@ public class AvbStoreLogic implements AvbStore{
 	public int updateVoteEnd(SqlSession session, Integer voteNo) {
 		return session.update("VoteMapper.updateVoteEnd",voteNo);
 	}
+
+	@Override
+	public int selectUserChoice(SqlSession session, Integer voteNo, String voteWriterId) {
+		HashMap<String,Object> hashMap = new HashMap<>();
+		hashMap.put("voteNo",voteNo );
+		hashMap.put("voteWriterId",voteWriterId);
+		return session.selectOne("VoteMapper.selectUserChoice",hashMap);
+	}
+
+	@Override
+	public List<VoteReply> selectOriginalReply(SqlSession session, Integer voteNo) {
+		return session.selectList("VoteReplyMapper.selectOriginalReply",voteNo);
+	}
+	
+	@Override
+	public List<VoteReply> selectReReply(SqlSession session, Integer voteNo, Integer replyNo) {
+		HashMap<String,Integer> hashMap = new HashMap<>();
+		hashMap.put("voteNo",voteNo);
+		hashMap.put("replyNo",replyNo);
+		
+		return session.selectList("VoteReplyMapper.selectReReply",voteNo);
+	}
+
+	@Override
+	public int insertOriginalReply(SqlSession session, VoteReply vReply) {
+		return session.insert("VoteReplyMapper.insertOriginalReply", vReply) ;
+	}
+	
+	@Override
+	public int insertReReply(SqlSession session, VoteReply vReply) {
+		return session.insert("VoteReplyMapper.insertReReply",vReply);
+	}
+
+	@Override
+	public int updateReply(SqlSession session, VoteReply vReply) {
+		return session.update("VoteReplyMapper.updateReply", vReply);
+	}
+
+	@Override
+	public int deleteReply(SqlSession session, Integer replyNo) {
+		return session.delete("VoteReplyMapper.deleteReply",replyNo);
+	}
+
+
+
+
 
 
 }

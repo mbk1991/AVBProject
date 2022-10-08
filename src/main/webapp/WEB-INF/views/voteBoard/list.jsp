@@ -8,7 +8,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-    <div id="header"></div>
+    <div id="header">
+    	 <a href="/">로그인화면으로</a>
+    </div>
     <div id="contents">
         <div id="wrap">
             <button onclick="location.href='/vote/writeView.do';">투표 올리기</button>
@@ -25,7 +27,7 @@
             <div id="board-wrap">
                 <table>
                     <tr>
-                        <th>제목</th>
+                        <th width="500px">제목</th>
                         <th>작성자</th>
                         <th>투표진행상태</th>
                         <th>조회수</th>
@@ -35,22 +37,25 @@
 	                    <tr onclick="location.href='/vote/detail.do?voteNo='+${vote.voteNo }+'';">
 	                    	<th>${vote.voteTitle }</th>
 	                    	<th>${vote.voteWriter }</th>
-	                    	<th>${vote.voteEnd }</th>
+	                    	<th>
+	                    		<c:if test="${vote.voteEnd eq 'N' }">진행중(${vote.sumCount }/${vote.participantLimit })</c:if>
+	                    		<c:if test="${vote.voteEnd ne 'N' }">투표종료(${vote.sumCount }/${vote.participantLimit })</c:if>
+	                    	</th>
 	                    	<th>${vote.viewCount }</th>
 	                    	<th>${vote.replyCount }</th>
 	                    </tr>
-	                    <form>
-	                    	<input type="hidden" name="voteNo" value="${vote.voteNo }">
-	                    	<input type="hidden" name="voteWriter" value="${vote.voteWriter }">
-	                    	<input type="hidden" name="voteEnd" value="${vote.voteEnd }">
-	                    </form>
+<!-- 	                    <form> -->
+<%-- 	                    	<input type="hidden" name="voteNo" value="${vote.voteNo }"> --%>
+<%-- 	                    	<input type="hidden" name="voteWriter" value="${vote.voteWriter }"> --%>
+<%-- 	                    	<input type="hidden" name="voteEnd" value="${vote.voteEnd }"> --%>
+<!-- 	                    </form> -->
 					</c:forEach>                    
                 </table>
             </div>
         </div>
     </div>
     <div id="footer">
-    	<a href="/">로그인화면으로</a>
+      	<a href="/">로그인화면으로</a>
     </div>
 </body>
 </html>

@@ -6,6 +6,7 @@ public class VoteBoard {
 
 	private int voteNo; //게시물 번호, 식별자
 	private String voteWriter; // 작성자 닉네임
+	private String memberId; // 작성자 아이디, 로직용
 	private String voteTitle; // 제목
 	private String voteContents; // 내용
 	private String voteEnd; // 투표 종료여부
@@ -30,13 +31,14 @@ public class VoteBoard {
 	public VoteBoard() {}
 
 
-	public VoteBoard(int voteNo, String voteWriter, String voteTitle, String voteContents, String voteEnd,
-			int viewCount, int replyCount, String firstLabel, String secondLabel, String thirdLabel, String fourthLabel,
-			String fifthLabel, int firstCount, int secondCount, int thirdCount, int fourthCount, int fifthCount,
-			int sumCount, int participantLimit, Timestamp voteTime, String voteStatus) {
+	public VoteBoard(int voteNo, String voteWriter, String memberId, String voteTitle, String voteContents,
+			String voteEnd, int viewCount, int replyCount, String firstLabel, String secondLabel, String thirdLabel,
+			String fourthLabel, String fifthLabel, int firstCount, int secondCount, int thirdCount, int fourthCount,
+			int fifthCount, int sumCount, Timestamp voteTime, String voteStatus, int participantLimit) {
 		super();
 		this.voteNo = voteNo;
 		this.voteWriter = voteWriter;
+		this.memberId = memberId;
 		this.voteTitle = voteTitle;
 		this.voteContents = voteContents;
 		this.voteEnd = voteEnd;
@@ -53,9 +55,9 @@ public class VoteBoard {
 		this.fourthCount = fourthCount;
 		this.fifthCount = fifthCount;
 		this.sumCount = sumCount;
-		this.participantLimit = participantLimit;
 		this.voteTime = voteTime;
 		this.voteStatus = voteStatus;
+		this.participantLimit = participantLimit;
 	}
 
 
@@ -76,6 +78,16 @@ public class VoteBoard {
 
 	public void setVoteWriter(String voteWriter) {
 		this.voteWriter = voteWriter;
+	}
+
+
+	public String getMemberId() {
+		return memberId;
+	}
+
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 
 
@@ -239,16 +251,6 @@ public class VoteBoard {
 	}
 
 
-	public int getParticipantLimit() {
-		return participantLimit;
-	}
-
-
-	public void setParticipantLimit(int participantLimit) {
-		this.participantLimit = participantLimit;
-	}
-
-
 	public Timestamp getVoteTime() {
 		return voteTime;
 	}
@@ -269,17 +271,30 @@ public class VoteBoard {
 	}
 
 
+	public int getParticipantLimit() {
+		return participantLimit;
+	}
+
+
+	public void setParticipantLimit(int participantLimit) {
+		this.participantLimit = participantLimit;
+	}
+
+
 	@Override
 	public String toString() {
-		return "VoteBoard [voteNo=" + voteNo + ", voteWriter=" + voteWriter + ", voteTitle=" + voteTitle
-				+ ", voteContents=" + voteContents + ", voteEnd=" + voteEnd + ", viewCount=" + viewCount
+		return "VoteBoard [voteNo=" + voteNo + ", voteWriter=" + voteWriter + ", memberId=" + memberId + ", voteTitle="
+				+ voteTitle + ", voteContents=" + voteContents + ", voteEnd=" + voteEnd + ", viewCount=" + viewCount
 				+ ", replyCount=" + replyCount + ", firstLabel=" + firstLabel + ", secondLabel=" + secondLabel
 				+ ", thirdLabel=" + thirdLabel + ", fourthLabel=" + fourthLabel + ", fifthLabel=" + fifthLabel
 				+ ", firstCount=" + firstCount + ", secondCount=" + secondCount + ", thirdCount=" + thirdCount
 				+ ", fourthCount=" + fourthCount + ", fifthCount=" + fifthCount + ", sumCount=" + sumCount
-				+ ", participantLimit=" + participantLimit + ", voteTime=" + voteTime + ", voteStatus=" + voteStatus
+				+ ", voteTime=" + voteTime + ", voteStatus=" + voteStatus + ", participantLimit=" + participantLimit
 				+ "]";
 	}
+
+
+
 
 	
 }

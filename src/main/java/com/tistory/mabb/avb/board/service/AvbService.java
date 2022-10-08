@@ -3,6 +3,7 @@ package com.tistory.mabb.avb.board.service;
 import java.util.List;
 
 import com.tistory.mabb.avb.board.domain.VoteBoard;
+import com.tistory.mabb.avb.board.domain.VoteReply;
 
 public interface AvbService {
 	public int registerVote(VoteBoard vote);
@@ -15,4 +16,15 @@ public interface AvbService {
 	public int addCount(String column,Integer voteNo);
 	public int sumCount(Integer voteNo);
 	public int modifyVoteEnd(Integer voteNo);
+	public int getUserChoice(Integer voteNo, String voteWriterId);
+	
+	//댓글
+	public List<VoteReply> printOriginalReply(Integer voteNo);
+	public List<VoteReply> printReReply(Integer voteNo, Integer replyNo);
+	public int registerOriginalReply(VoteReply vReply);
+	public int registerReReply(VoteReply vReply);
+	public int modifyReply(VoteReply vReply);
+	public int removeReply(Integer replyNo);
+	
+	
 }

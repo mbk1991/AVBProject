@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tistory.mabb.avb.board.domain.VoteBoard;
+import com.tistory.mabb.avb.board.domain.VoteReply;
 import com.tistory.mabb.avb.board.service.AvbService;
 import com.tistory.mabb.avb.board.store.AvbStore;
 
@@ -61,6 +62,45 @@ public class AvbServiceImpl implements AvbService {
 	public int modifyVoteEnd(Integer voteNo) {
 		return aStore.updateVoteEnd(session, voteNo);
 	}
+
+	@Override
+	public int getUserChoice(Integer voteNo, String voteWriterId) {
+		return aStore.selectUserChoice(session,voteNo,voteWriterId);
+	}
+
+	@Override
+	public List<VoteReply> printOriginalReply(Integer voteNo) {
+		return aStore.selectOriginalReply(session, voteNo);
+	}
+	
+	@Override
+	public List<VoteReply> printReReply(Integer voteNo, Integer replyNo) {
+		return aStore.selectReReply(session, voteNo, replyNo);
+	}
+
+	@Override
+	public int registerOriginalReply(VoteReply vReply) {
+		return aStore.insertOriginalReply(session,vReply);
+	}
+	
+	@Override
+	public int registerReReply(VoteReply vReply) {
+		return aStore.insertReReply(session, vReply);
+	}
+
+	@Override
+	public int modifyReply(VoteReply vReply) {
+		return aStore.updateReply(session,vReply);
+	}
+
+	@Override
+	public int removeReply(Integer replyNo) {
+		return aStore.deleteReply(session,replyNo);
+	}
+
+
+
+
 
 
 }

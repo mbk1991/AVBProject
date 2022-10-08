@@ -75,7 +75,6 @@ public class MemberController {
 			HttpSession session,HttpServletRequest request) {
 		
 		Member loginUser = mService.loginMember(member);
-		System.out.println(loginUser);
 		if(loginUser != null) {
 			session.setAttribute("loginUser", loginUser);
 			mv.setViewName("redirect:/");
@@ -89,6 +88,12 @@ public class MemberController {
 		return mv;
 	}
 	
+	/**
+	 * 로그아웃
+	 * @param mv
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value="member/logout.do",method=RequestMethod.GET)
 	public ModelAndView logoutMember(ModelAndView mv,
 			HttpSession session) {

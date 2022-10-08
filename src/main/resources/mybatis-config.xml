@@ -12,12 +12,15 @@
 		<typeAlias type="com.tistory.mabb.avb.member.domain.SecondKeyword" 	alias="SecondKeyword"/>
 		<typeAlias type="com.tistory.mabb.avb.member.domain.ThirdKeyword" 	alias="ThirdKeyword"/>
 		<typeAlias type="com.tistory.mabb.avb.board.domain.VoteBoard" 		alias="VoteBoard"/>
+		<typeAlias type="com.tistory.mabb.avb.board.domain.VoteReply"		alias="VoteReply"/>	
 	</typeAliases>
+	
 	 <mappers>
 	   <mapper resource="mappers/member-mapper.xml"/>
 	   <mapper resource="mappers/vote-mapper.xml"/>
 	   <mapper resource="mappers/first-mapper.xml"/>
 	   <mapper resource="mappers/second-mapper.xml"/>
 	   <mapper resource="mappers/third-mapper.xml"/>
+	   <mapper resource="mappers/reply-mapper.xml"/>
 	 </mappers>
 </configuration>

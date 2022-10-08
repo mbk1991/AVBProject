@@ -1,5 +1,7 @@
 package com.tistory.mabb.avb.board.controller;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -78,8 +80,7 @@ public class AvbController {
 	 * @return
 	 */
 	@RequestMapping(value = "/vote/detail.do", method = RequestMethod.GET)
-	public ModelAndView voteDetail(ModelAndView mv, 
-			@RequestParam("voteNo") Integer voteNo, HttpSession session) {
+	public ModelAndView voteDetail(ModelAndView mv, @RequestParam("voteNo") Integer voteNo, HttpSession session) {
 
 		// 1.게시물 번호와 로그인 유저의 아이디와 작성자의 아이디, 투표진행상태, 로그인 유저의 투표 여부가 필요하다
 		// 2.컨트롤러 단에서 조건에 따라 분기한다.
@@ -87,60 +88,67 @@ public class AvbController {
 		// 작성자와 로그인 유저 여부
 		// 로그인 유저의 투표 여부
 		Member loginUser = (Member) session.getAttribute("loginUser");
-		String loginUserNickname = loginUser.getNickName();
+		String loginUserId = loginUser.getMemberId();
 
 		VoteBoard vote = aService.printOneVote(voteNo);
 		String voteEnd = vote.getVoteEnd();
-		String voteWriter = vote.getVoteWriter();
-		
+		String voteWriterId = vote.getMemberId();
+
+		// 나의 투표를 확인할 수 있도록 하기 위해
+		// 게시물 클릭 시 로그인 유저의 투표정보를 가져온다.
+		int userChoice = aService.getUserChoice(voteNo, loginUserId);
+
 		if (!voteEnd.equals("Y")) {
-				// 투표 진행중
-				if (!voteWriter.equals(loginUserNickname)) {
-					// 작성자가 아닌유저의 조회
-					int result = aService.participantCheck(loginUserNickname, voteNo);
-					if (result > 0) {
-						// 이미 투표 참여 투표 대기화면 노출
-						mv.addObject("vote", vote).setViewName("/voteBoard/voteWaiting");
-					} else {
-						// 투표 미참여 투표화면 노출
-						mv.addObject("vote", vote).setViewName("/voteBoard/voteJoin");
-					}
-	
+			// 투표 진행중
+			if (!voteWriterId.equals(loginUserId)) {
+				// 작성자가 아닌유저의 조회
+				int result = aService.participantCheck(loginUserId, voteNo);
+				if (result > 0) {
+					// 이미 투표 참여 투표 대기화면 노출
+					mv.addObject("userChoice", userChoice).addObject("vote", vote)
+							.setViewName("/voteBoard/voteWaiting");
 				} else {
-					// 투표 진행 중 작성자의 조회: 투표 대기화면 노출
-					mv.addObject("vote", vote).setViewName("/voteBoard/voteWaiting");
+					// 투표 미참여 투표화면 노출
+					mv.addObject("userChoice", userChoice).addObject("vote", vote).setViewName("/voteBoard/voteJoin");
 				}
+
+			} else {
+				// 투표 진행 중 작성자의 조회: 투표 대기화면 노출
+				mv.addObject("userChoice", userChoice).addObject("vote", vote).setViewName("/voteBoard/voteWaiting");
+			}
 		} else {
 			// 투표 완료/ 완료화면
-			mv.addObject("vote", vote).setViewName("/voteBoard/voteComplite");
+			int mostCount = voteSortDesc(vote);
+			mv.addObject("mostCount",mostCount).addObject("userChoice", userChoice).addObject("vote", vote).setViewName("/voteBoard/voteComplite");
 		}
 
 		return mv;
 	}
-	
-	/**
-	 * 집계
-	 */
-	public void voteAggregation(VoteBoard vote) {
-		int first = vote.getFirstCount();
-		int second = vote.getSecondCount();
-		int third = vote.getThirdCount();
-		int fourth = vote.getFourthCount();
-		int fifth = vote.getFifthCount();
-		String firstLabel = vote.getFirstLabel();
-		String secondLabel = vote.getSecondLabel();
-		String thirdLabel = vote.getThirdLabel();
-		String fourthLabel = vote.getFourthLabel();
-		String fifthLabel = vote.getFifthLabel();
-		
-	}
-	
-	
-	
 
 	/**
-	 * 투표하기 버튼 클릭 시 로직
-	 * 투표를 할 수 있는 화면은 투표를 하지 않은 사람만 접근이 가능하다.
+	 * 최대값 구하기.
+	 */
+	public int voteSortDesc(VoteBoard vote) {
+		// 방법1.최대값을 리턴하고 화면단에서 최대값인 경우 효과를 주도록 하는 방법
+		// 이렇게 할 경우 투표 항목에서 1등 또는 공동1등에 표시만 된다.
+		// 이 경우 1건,1건,1건인 경우도 1등으로 표시가 된다. 최다득표로 표기
+		// 방법2. 내림차순 정렬하여 화면으로 보낸다.
+
+		Integer first = vote.getFirstCount();
+		Integer second = vote.getSecondCount();
+		Integer third = vote.getThirdCount();
+		Integer fourth = vote.getFourthCount();
+		Integer fifth = vote.getFifthCount();
+		Integer[] countArr = { first, second, third, fourth, fifth };
+		Arrays.sort(countArr, Collections.reverseOrder());
+		
+
+		return countArr[0];
+	}
+
+	/**
+	 * 투표하기 버튼 클릭 시 로직 투표를 할 수 있는 화면은 투표를 하지 않은 사람만 접근이 가능하다.
+	 * 
 	 * @param mv
 	 * @param voteCheck
 	 * @param voteNo
@@ -148,16 +156,13 @@ public class AvbController {
 	 * @return
 	 */
 	@RequestMapping(value = "/vote/join.do", method = RequestMethod.POST)
-	public ModelAndView voteJoin(ModelAndView mv,
-			@RequestParam("voteCheck") Integer voteCheck,
-			@RequestParam("voteNo") Integer voteNo,
-			HttpSession session) {
-		Member loginUser = (Member)session.getAttribute("loginUser");
-		String loginNickname = loginUser.getNickName();
-		
-		
-		//1.화면에서 라디오로 입력받은 값에 따라 해당되는 
-		//컬럼에 카운팅을 해준다. 컬럼명을 저장하는 부분.
+	public ModelAndView voteJoin(ModelAndView mv, @RequestParam("voteCheck") Integer voteCheck,
+			@RequestParam("voteNo") Integer voteNo, HttpSession session) {
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		String loginUserId = loginUser.getMemberId();
+
+		// 1.화면에서 라디오로 입력받은 값에 따라 해당되는
+		// 컬럼에 카운팅을 해준다. 컬럼명을 저장하는 부분.
 		String column = "";
 		switch (voteCheck) {
 		case 1:
@@ -176,29 +181,29 @@ public class AvbController {
 			column = "FIFTH_COUNT";
 			break;
 		}
-		
-		//2.투표한 번호 카운트.
-		int result = aService.addCount(column,voteNo);
+
+		// 2.투표한 번호 카운트.
+		int result = aService.addCount(column, voteNo);
 		if (result > 0) {
-			//3. 투표 합계 업데이트
+			// 3. 투표 합계 업데이트
 			int sumResult = aService.sumCount(voteNo);
-			if(sumResult>0) {
-				
-				//4.성공 시 투표자 등록
-				int registerResult = aService.registerParticipant(loginNickname,voteNo,voteCheck);
-				if(registerResult > 0) {
+			if (sumResult > 0) {
+
+				// 4.성공 시 투표자 등록
+				int registerResult = aService.registerParticipant(loginUserId, voteNo, voteCheck);
+				if (registerResult > 0) {
 					// 5.투표자수를 확인하여 투표종료여부를 'Y'로 바꾼다.
 					VoteBoard thisVote = aService.printOneVote(voteNo);
 					int sumCount = thisVote.getSumCount();
 					int participantLimit = thisVote.getParticipantLimit();
-					if(sumCount == participantLimit) {
+					if (sumCount == participantLimit) {
 						int voteEndResult = aService.modifyVoteEnd(voteNo);
-						mv.setViewName("redirect:/vote/detail.do?voteNo="+voteNo);
+						mv.setViewName("redirect:/vote/detail.do?voteNo=" + voteNo);
 						return mv;
 					}
-					
-					//6.투표 참여자 등록 성공 시
-					mv.setViewName("redirect:/vote/detail.do?voteNo="+voteNo);
+
+					// 6.투표 참여자 등록 성공 시
+					mv.setViewName("redirect:/vote/detail.do?voteNo=" + voteNo);
 				}
 			}
 		} else {
