@@ -82,10 +82,11 @@
             			<td><c:if test="${vote.fifthCount eq mostCount }">V</c:if></td>
             		</tr>
             		</c:if>
-            	</table>
+            	</table><br>
             </div>
 <!-- 댓글 -->
             <div id="reply">
+            	<div id="replyCount"></div>
                 <div id="replyInput">
 	            	<input id="replyContents" type="text" name="replyContents" placeholder="댓글을 입력해보세요" >
 	            	<button id="submitReply" type="button">댓글등록</button>
@@ -142,24 +143,55 @@
 			type:"get",
 			success:function(vList){
 				if(vList!=null){
+					$("#replyCount").text("댓글 ("+vList.length+")");
 					for(var i in vList){
-						var $li = $("<li class='reply'>");
-						var $divInfo = $("<div class='info'>").html("<div>"+vList[i].replyWriter+"</div><div>"+vList[i].replyTime+"</div>");
-						var $divContents =$("<div class='contents'>").text(vList[i].replyContents);
-						var $arcodianReReply = $("<a href='#' onclick=';'>").text("답글 달기");
-						var $divReReplyArea = $("<div class='reReply-area'>").html("<input type='text' placeholder='답글을 입력해보세요.'><button onclick='submitReReply(this,"+vList[i].replyNo+");'>답글등록</button>");
-						
-						$li.append($divInfo);
-						$li.append($divContents);
-						$li.append($arcodianReReply);
-						$li.append($divReReplyArea);
-						$replyList.append($li);
+						if(vList[i].reReplyYn == 'N'){
+							var $li = $("<li class='reply'>");
+							var $divInfo = $("<div class='info'>").html("<div>"+vList[i].replyWriter+"</div><div>"+vList[i].replyTime+"</div>");
+							var $divContents =$("<div class='contents'>").text(vList[i].replyContents);
+							var $arcodianReReply = $("<button class='reBtn' onclick='reReplyList(this);'>답글 달기</button>");
+							var $divReReplyArea = $("<div class='reReply' style='display:none;'>").html("<div class='reReplyList'></div><div class='reReplyInput'><input type='text' placeholder='답글을 입력해보세요.'><button onclick='submitReReply(this,"+vList[i].replyNo+");'>답글등록</button></div>");
+							$li.append($divInfo);
+							$li.append($divContents);
+							$li.append($arcodianReReply);
+							$li.append($divReReplyArea);
+							$replyList.append($li);
+							var reReplyCount = 0;
+						}else{
+							reReplyCount++;
+							var $lastReReplyList = $(".reReplyList").last();
+							var $li = $("<li class='reReply'>");
+							var $divInfo = $("<div class='info'>").html("<div>"+vList[i].replyWriter+"</div><div>"+vList[i].replyTime+"</div>");
+							var $divContents =$("<div class='contents'>").text(vList[i].replyContents);
+							$li.append($divInfo);
+							$li.append($divContents);
+							$lastReReplyList.append($li);
+							$(".reBtn").last().text("답글("+reReplyCount+")");
+						}
 					}
 				}
 			},
 			error:function(){}
 		});
 	}
+	
+	
+//답글리스트 아코디언. 
+	function reReplyList(thisBtn){
+		var display = $(thisBtn).next().css("display");
+		console.log(display);
+		if(display == 'none'){
+			$(thisBtn).next().css("display","block");
+		}else{
+			$(thisBtn).next().css("display","none");
+		}
+	}
+	
+
+	
+
+	
+	
 //댓글 등록버튼 이벤트
 	var submitReply = $("#submitReply").on("click",function(){
 		

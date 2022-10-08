@@ -265,6 +265,25 @@ public class AvbController {
 			return null;
 		}
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/reply/reReplylist.do",produces="application/json;charset=utf-8", method=RequestMethod.GET)
+	public String reReplyList(@RequestParam("voteNo") Integer voteNo,
+			@RequestParam("refReplyNo") Integer refReplyNo) {
+		
+		System.out.println(voteNo);
+		
+		List<VoteReply> vList = aService.printReReply(voteNo, refReplyNo);
+		if(!vList.isEmpty()) {
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
+			return gson.toJson(vList);
+		}else {
+			return null;
+		}
+	}
+	
+	
+	
 //	@ResponseBody
 //	@RequestMapping(value="",method=RequestMethod.GET)
 //	public void modifyReply() {

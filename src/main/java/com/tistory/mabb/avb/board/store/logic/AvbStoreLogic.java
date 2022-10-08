@@ -82,17 +82,17 @@ public class AvbStoreLogic implements AvbStore{
 
 	@Override
 	public List<VoteReply> selectOriginalReply(SqlSession session, Integer voteNo) {
-		return session.selectList("VoteReplyMapper.selectOriginalReply",voteNo);
+		return session.selectList("VoteReplyMapper.selectAllReply",voteNo);
 	}
 	
-	@Override
-	public List<VoteReply> selectReReply(SqlSession session, Integer voteNo, Integer replyNo) {
-		HashMap<String,Integer> hashMap = new HashMap<>();
-		hashMap.put("voteNo",voteNo);
-		hashMap.put("replyNo",replyNo);
-		
-		return session.selectList("VoteReplyMapper.selectReReply",voteNo);
-	}
+//	@Override
+//	public List<VoteReply> selectReReply(SqlSession session, Integer voteNo, Integer refReplyNo) {
+//		HashMap<String,Integer> hashMap = new HashMap<>();
+//		hashMap.put("voteNo",voteNo);
+//		hashMap.put("refReplyNo",refReplyNo);
+//		
+//		return session.selectList("VoteReplyMapper.selectReReply",voteNo);
+//	}
 
 	@Override
 	public int insertOriginalReply(SqlSession session, VoteReply vReply) {

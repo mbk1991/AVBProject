@@ -16,19 +16,20 @@
 		<result column="MEMBER_ID"   		property="memberId"/>
 	</resultMap>
 
-	<select id="selectOriginalReply" resultMap="vReplyResultMap">
-		SELECT * FROM REPLY_TBL 
-		WHERE REREPLY_YN = 'N' AND VOTE_NO=#{voteNo}
+	<select id="selectAllReply" resultMap="vReplyResultMap">
+		SELECT ROW_NUMBER() OVER(PARTITION BY REF_REPLY_NO ORDER BY REPLY_TIME) AS NO, REPLY_TBL.*
+		FROM REPLY_TBL
+		WHERE VOTE_NO = #{voteNo}
 	</select>
 	
 	<select id="selectReReply" resultMap="vReplyResultMap">
 		SELECT * FROM REPLY_TBL
-		WHERE REREPLY_YN = 'Y' AND REF_REPLY_NO=#{replyNo} AND VOTE_NO=#{voteNo}
+		WHERE REREPLY_YN = 'Y' AND REF_REPLY_NO=#{refReplyNo} AND VOTE_NO=#{voteNo}
 	</select>
 	
 	<insert id="insertOriginalReply">
 		INSERT INTO REPLY_TBL 
-		VALUES(SEQ_REPLY_NO.NEXTVAL,#{voteNo},DEFAULT,'N',#{replyWriter},#{replyContents},DEFAULT,DEFAULT,#{memberId})
+		VALUES(SEQ_REPLY_NO.NEXTVAL,#{voteNo},SEQ_REPLY_NO.CURRVAL,'N',#{replyWriter},#{replyContents},DEFAULT,DEFAULT,#{memberId})
 	</insert>
 	
 	<insert id="insertReReply">

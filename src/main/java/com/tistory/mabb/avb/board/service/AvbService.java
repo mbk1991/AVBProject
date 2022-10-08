@@ -20,7 +20,7 @@ public interface AvbService {
 	
 	//댓글
 	public List<VoteReply> printOriginalReply(Integer voteNo);
-	public List<VoteReply> printReReply(Integer voteNo, Integer replyNo);
+	public List<VoteReply> printReReply(Integer voteNo, Integer refReplyNo);
 	public int registerOriginalReply(VoteReply vReply);
 	public int registerReReply(VoteReply vReply);
 	public int modifyReply(VoteReply vReply);

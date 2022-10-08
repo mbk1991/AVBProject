@@ -22,7 +22,7 @@ public interface AvbStore {
 
 	//댓글
 	public List<VoteReply> selectOriginalReply(SqlSession session, Integer voteNo);
-	public List<VoteReply> selectReReply(SqlSession session, Integer voteNo, Integer replyNo);
+	public List<VoteReply> selectReReply(SqlSession session, Integer voteNo, Integer refReplyNo);
 	public int insertOriginalReply(SqlSession session, VoteReply vReply);
 	public int insertReReply(SqlSession session, VoteReply vReply);
 	public int updateReply(SqlSession session, VoteReply vReply);
