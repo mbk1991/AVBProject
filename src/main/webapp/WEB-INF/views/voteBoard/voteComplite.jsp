@@ -10,6 +10,7 @@
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<link href="/resources/css/common.css" rel="stylesheet">
 <body>
     <div id="header" class="container">
     	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
@@ -17,6 +18,29 @@
     <div id="contents" class="container">
         <div id="wrap">
 <!-- 글 내용 -->
+<h1>${vote.voteWriter }님의 투표</h1>
+        <div id="wrap">
+            	<div class="text-wrap">
+	            	<input type="text" id="voteTitle"  readonly value="${vote.voteTitle }" >
+            	</div>
+            	<div class="text-wrap">
+	            	<textarea id="voteContents"  readonly style="height:100%;width:100%;border-style:none;">${vote.voteContents }</textarea>
+            	</div>
+                <div class="text-wrap">
+                	<h3>투표 진행 현황</h3>
+                	${vote.sumCount } / ${vote.participantLimit }
+                </div><br>
+                <h1>투표 항목</h1>
+                <div id="voteCandi-wrap">
+                	<div class="text-wrap">
+	                    <input type="text"   id="firstLabel"  name="firstLabel"  placeholder="후보1" required>
+                	</div>
+                	<div class="text-wrap">
+	                    <input type="text"   id="secondLabel" name="secondLabel" placeholder="후보2" required>
+                	</div>
+                
+                </div>
+                
             <div id="detail-area">
             	<table>
 					<tr>

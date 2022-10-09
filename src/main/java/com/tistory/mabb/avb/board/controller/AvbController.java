@@ -41,7 +41,7 @@ public class AvbController {
 			@RequestParam(value="page",required=false) Integer currentPage
 			) {
 		int page = (currentPage != null)? currentPage : 1;
-		Paging paging = new Paging(aService.countAllVote(), page, 10, 5);
+		Paging paging = new Paging(aService.countAllVote(), page, 20, 5);
 		
 		List<VoteBoard> vList = aService.printAllVote(paging);
 		if (!vList.isEmpty()) {
@@ -65,7 +65,7 @@ public class AvbController {
 		int page = (currentPage != null)? currentPage : 1;
 		
 		
-		Paging paging = new Paging(aService.countSearchVote(search), page, 10, 5);
+		Paging paging = new Paging(aService.countSearchVote(search), page, 20, 5);
 		List<VoteBoard> vList = aService.searchVote(paging, search);
 		if (!vList.isEmpty()) {
 			mv.addObject("url","search")

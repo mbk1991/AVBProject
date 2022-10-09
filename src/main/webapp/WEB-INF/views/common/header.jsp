@@ -8,16 +8,16 @@
 </head>
 <body>
 		<div id="headerMenu" class="container row">
-		    <div class="helderLink col">
-		      <a href="/">로그인 화면으로</a>
+		    <div class="headerLink col">
+		      <a href="/">로그인 화면</a>
 		    </div>
-		    <div class="helderLink col">
-		      <a href="/vote/writeView.do">투표 올리기</a>
+		    <div class="headerLink col">
+		      <a href="/vote/writeView.do">투표 작성</a>
 		    </div>
-		    <div class="helderLink col">
-		      <a href="/vote/list.do">목록으로</a>
+		    <div class="headerLink col">
+		      <a href="/vote/list.do">목록 이동</a>
 		    </div>
-   		    <div class="helderLink col">
+   		    <div class="headerLink col">
 		      <a href="#top">맨 위로</a>
 		    </div>
 		</div>

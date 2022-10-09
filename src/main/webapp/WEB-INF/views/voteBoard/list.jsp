@@ -15,22 +15,22 @@
     	 	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
     </div>
     <div id="contents" class="container">
-    	<h2>${paging.totalCount }개의 투표가 있어요.</h2>
+    	<h1>${paging.totalCount }개의 투표가 있어요.</h1><br>
         <div id="wrap">
             <div id="search-wrap">
 	            <form action="/vote/search.do" method="get" >
-	                <select name="searchCondition" id="" >
+	                <select class="form-select" name="searchCondition" id="" style="padding:10px;" >
 	                	<option <c:if test="${search.searchCondition eq '' }">selected</c:if> value="">전체</option>
 	                    <option <c:if test="${search.searchCondition eq 'VOTE_WRITER' }">selected</c:if> value="VOTE_WRITER">작성자</option>
 	                    <option <c:if test="${search.searchCondition eq 'VOTE_TITLE' }">selected</c:if> value="VOTE_TITLE">제목</option>
 	                </select>
-	               
-	               	<label><input checked type="radio" name="searchFilter" value="">전체</label>
-	               	<label><input <c:if test="${search.searchFilter eq 'N' }">checked</c:if> type="radio" name="searchFilter" value="N">진행중</label>
-					<label><input <c:if test="${search.searchFilter eq 'Y' }">checked</c:if> type="radio" name="searchFilter" value="Y">투표완료</label>
 	            	<div class="text-wrap">
 		                <input type="text" name="searchValue" placeholder="검색어를 입력해보세요" value="${search.searchValue }">
 	            	</div>
+	               
+	               	<label><input checked type="radio" name="searchFilter" value="" class="form-check-input" >전체</label>
+	               	<label><input <c:if test="${search.searchFilter eq 'N' }">checked</c:if> type="radio" name="searchFilter" value="N" class="form-check-input" >진행중</label>
+					<label><input <c:if test="${search.searchFilter eq 'Y' }">checked</c:if> type="radio" name="searchFilter" value="Y" class="form-check-input" >투표완료</label>
 	                <button class="btn btn-light"  type="">검색</button>
 	                <hr>
 	            </form>
@@ -41,7 +41,7 @@
 	                    <tr class="listTr" onclick="location.href='/vote/detail.do?voteNo='+${vote.voteNo }+'';">
 	                    	<td>
 	                    		<div>
-	                    			<h3>${vote.voteTitle }</h3>
+	                    			<h2>${vote.voteTitle }</h2>
 	                    		</div>
 	                    		<div>
 		                    		<small>${vote.voteWriter }님의 투표가 </small>
@@ -58,13 +58,13 @@
 <!-- 페이징 -->
 		<div id="paging">
 			<c:if test="${paging.startNavi > paging.startPage}">
-				<a href="/vote/${url }.do?page=${paging.startNavi -1}&searchValue=${search.searchValue }&searchCondition=${search.searchCondition}&searchFilter=${search.searchFilter}"><<</a>
+				<a href="/vote/${url }.do?page=${paging.startNavi -1}&searchValue=${search.searchValue }&searchCondition=${search.searchCondition}&searchFilter=${search.searchFilter}"><</a>
 			</c:if>
 			<c:forEach begin="${paging.startNavi }" end="${paging.endNavi }" var="n">
 				<a href="/vote/${url }.do?page=${n }&searchValue=${search.searchValue }&searchCondition=${search.searchCondition}&searchFilter=${search.searchFilter}">${n}</a>
 			</c:forEach>
 			<c:if test="${paging.endNavi < paging.endPage}">
-				<a href="/vote/${url }.do?page=${paging.endNavi +1}&searchValue=${search.searchValue }&searchCondition=${search.searchCondition}&searchFilter=${search.searchFilter}">>></a>
+				<a href="/vote/${url }.do?page=${paging.endNavi +1}&searchValue=${search.searchValue }&searchCondition=${search.searchCondition}&searchFilter=${search.searchFilter}">></a>
 			</c:if>
 		</div>
     </div>

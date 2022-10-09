@@ -70,19 +70,19 @@
 				<if test='searchCondition != ""'>
 					${searchCondition} LIKE '%'||#{searchValue}||'%'
 					<if test='searchFilter != ""'>
-						AND VOTE_END = #{searchFilter}
+						AND VOTE_END LIKE '%'||#{searchFilter}||'%'
 					</if>
 				</if>
 				<if test='searchCondition == ""'>
 					(VOTE_WRITER LIKE '%'||#{searchValue}||'%')OR
 					(VOTE_TITLE LIKE '%'||#{searchValue}||'%')
 					<if test='searchFilter != ""'>
-						AND VOTE_END = #{searchFilter}
+						AND VOTE_END LIKE '%'||#{searchFilter}||'%'
 					</if>
 				</if>
 			</if>
 			<if test='searchValue == ""'>
-				VOTE_END = #{searchFilter}
+				AND VOTE_END LIKE '%'||#{searchFilter}||'%'
 			</if>
 		</where>
 		ORDER BY VOTE_TIME DESC
@@ -95,19 +95,19 @@
 				<if test='searchCondition != ""'>
 					${searchCondition} LIKE '%'||#{searchValue}||'%'
 					<if test='searchFilter != ""'>
-						AND VOTE_END = #{searchFilter}
+						AND VOTE_END LIKE '%'||#{searchFilter}||'%'
 					</if>
 				</if>
 				<if test='searchCondition == ""'>
 					(VOTE_WRITER LIKE '%'||#{searchValue}||'%')OR
 					(VOTE_TITLE LIKE '%'||#{searchValue}||'%')
 					<if test='searchFilter != ""'>
-						AND VOTE_END = #{searchFilter}
+						AND VOTE_END LIKE '%'||#{searchFilter}||'%'
 					</if>
 				</if>
 			</if>
 			<if test='searchValue == ""'>
-				VOTE_END = #{searchFilter}
+				AND VOTE_END LIKE '%'||#{searchFilter}||'%'
 			</if>
 		</where>
 	</select>
