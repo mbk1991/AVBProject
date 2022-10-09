@@ -11,6 +11,7 @@ import com.tistory.mabb.avb.board.domain.VoteReply;
 import com.tistory.mabb.avb.board.service.AvbService;
 import com.tistory.mabb.avb.board.store.AvbStore;
 import com.tistory.mabb.avb.common.Paging;
+import com.tistory.mabb.avb.common.Search;
 
 @Service
 public class AvbServiceImpl implements AvbService {
@@ -93,6 +94,16 @@ public class AvbServiceImpl implements AvbService {
 	@Override
 	public int removeReply(Integer replyNo) {
 		return aStore.deleteReply(session,replyNo);
+	}
+
+	@Override
+	public List<VoteBoard> searchVote(Paging paging, Search search) {
+		return aStore.selectSearchVote(session, paging, search);
+	}
+
+	@Override
+	public int countSearchVote(Search search) {
+		return aStore.countSearchVote(session, search);
 	}
 
 

@@ -9,7 +9,7 @@
 <body>
 </body>
 <script>
-	alert("${msg}" + "하였습니다.");
+// 	alert("${msg}" + "하였습니다.");
 	location.href="${url}";
 </script>
 </html>

@@ -45,6 +45,7 @@
 	
 	<select id="countAllVote" resultType="_int">
 		SELECT COUNT(*) FROM VOTE_TBL
+		ORDER BY VOTE_TIME DESC
 	</select>
 	
 	<select id="selectUserChoice" resultType="_int" parameterType="hashMap">
@@ -61,6 +62,56 @@
 		SELECT * FROM VOTE_TBL
 		WHERE VOTE_NO = #{voteNo}
 	</select>
+	
+	<select id="selectSearchVote" resultMap="VoteResultMap">
+		SELECT * FROM VOTE_TBL
+		<where>
+			<if test='searchValue != ""'>
+				<if test='searchCondition != ""'>
+					${searchCondition} LIKE '%'||#{searchValue}||'%'
+					<if test='searchFilter != ""'>
+						AND VOTE_END = #{searchFilter}
+					</if>
+				</if>
+				<if test='searchCondition == ""'>
+					(VOTE_WRITER LIKE '%'||#{searchValue}||'%')OR
+					(VOTE_TITLE LIKE '%'||#{searchValue}||'%')
+					<if test='searchFilter != ""'>
+						AND VOTE_END = #{searchFilter}
+					</if>
+				</if>
+			</if>
+			<if test='searchValue == ""'>
+				VOTE_END = #{searchFilter}
+			</if>
+		</where>
+		ORDER BY VOTE_TIME DESC
+	</select>
+	
+		<select id="countSearchVote" resultType="_int">
+		SELECT COUNT(*) FROM VOTE_TBL
+		<where>
+			<if test='searchValue != ""'>
+				<if test='searchCondition != ""'>
+					${searchCondition} LIKE '%'||#{searchValue}||'%'
+					<if test='searchFilter != ""'>
+						AND VOTE_END = #{searchFilter}
+					</if>
+				</if>
+				<if test='searchCondition == ""'>
+					(VOTE_WRITER LIKE '%'||#{searchValue}||'%')OR
+					(VOTE_TITLE LIKE '%'||#{searchValue}||'%')
+					<if test='searchFilter != ""'>
+						AND VOTE_END = #{searchFilter}
+					</if>
+				</if>
+			</if>
+			<if test='searchValue == ""'>
+				VOTE_END = #{searchFilter}
+			</if>
+		</where>
+	</select>
+	
 	
 	<select id="selectCheckParticipant" resultType="_int">
 		SELECT COUNT(*) FROM PARTICIPANT_TBL

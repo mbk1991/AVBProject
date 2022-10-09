@@ -98,9 +98,7 @@ public class MemberController {
 	public ModelAndView logoutMember(ModelAndView mv,
 			HttpSession session) {
 		session.invalidate();
-		mv.addObject("msg","로그아웃").
-		addObject("url","/").
-		setViewName("/common/alert");
+		mv.setViewName("redirect:/");
 		return mv;
 	}
 	

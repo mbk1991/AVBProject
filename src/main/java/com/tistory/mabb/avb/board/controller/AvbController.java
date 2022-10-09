@@ -21,6 +21,7 @@ import com.tistory.mabb.avb.board.domain.VoteBoard;
 import com.tistory.mabb.avb.board.domain.VoteReply;
 import com.tistory.mabb.avb.board.service.AvbService;
 import com.tistory.mabb.avb.common.Paging;
+import com.tistory.mabb.avb.common.Search;
 import com.tistory.mabb.avb.member.domain.Member;
 
 @Controller
@@ -37,18 +38,53 @@ public class AvbController {
 	 */
 	@RequestMapping(value = "/vote/list.do", method = RequestMethod.GET)
 	public ModelAndView listView(ModelAndView mv,
-			@RequestParam(value="page",required=false) Integer currentPage) {
+			@RequestParam(value="page",required=false) Integer currentPage
+			) {
 		int page = (currentPage != null)? currentPage : 1;
 		Paging paging = new Paging(aService.countAllVote(), page, 10, 5);
 		
 		List<VoteBoard> vList = aService.printAllVote(paging);
 		if (!vList.isEmpty()) {
-			mv.addObject("paging",paging).addObject("vList", vList).setViewName("/voteBoard/list");
+			mv.addObject("url","list")
+			.addObject("paging",paging)
+			.addObject("vList", vList)
+			.setViewName("/voteBoard/list");
 		} else {
-			mv.addObject("paging",paging).addObject("vList", null).setViewName("/voteBoard/list");
+			mv.addObject("url","list")
+			.addObject("paging",paging)
+			.addObject("vList", null)
+			.setViewName("/voteBoard/list");
 		}
 		return mv;
 	}
+	
+	@RequestMapping(value="/vote/search.do",method=RequestMethod.GET)
+	public ModelAndView searchView(ModelAndView mv,
+			@RequestParam(value="page", required=false) Integer currentPage,
+			@ModelAttribute Search search) {
+		int page = (currentPage != null)? currentPage : 1;
+		
+		
+		Paging paging = new Paging(aService.countSearchVote(search), page, 10, 5);
+		List<VoteBoard> vList = aService.searchVote(paging, search);
+		if (!vList.isEmpty()) {
+			mv.addObject("url","search")
+			.addObject("paging",paging)
+			.addObject("search",search)
+			.addObject("vList", vList)
+			.setViewName("/voteBoard/list");
+		} else {
+			mv.addObject("url","search")
+			.addObject("paging",paging)
+			.addObject("search",search)
+			.addObject("vList", null)
+			.setViewName("/voteBoard/list");
+		}
+		return mv;
+	}
+	
+	
+	
 
 	/**
 	 * 투표 작성 페이지로 이동

@@ -11,6 +11,7 @@ import com.tistory.mabb.avb.board.domain.VoteBoard;
 import com.tistory.mabb.avb.board.domain.VoteReply;
 import com.tistory.mabb.avb.board.store.AvbStore;
 import com.tistory.mabb.avb.common.Paging;
+import com.tistory.mabb.avb.common.Search;
 
 @Repository
 public class AvbStoreLogic implements AvbStore{
@@ -115,6 +116,16 @@ public class AvbStoreLogic implements AvbStore{
 	@Override
 	public int deleteReply(SqlSession session, Integer replyNo) {
 		return session.delete("VoteReplyMapper.deleteReply",replyNo);
+	}
+
+	@Override
+	public List<VoteBoard> selectSearchVote(SqlSession session, Paging paging, Search search) {
+		return session.selectList("VoteMapper.selectSearchVote", search, new RowBounds(paging.getOffset(), paging.getPageLimit()));
+	}
+
+	@Override
+	public int countSearchVote(SqlSession session, Search search) {
+		return session.selectOne("VoteMapper.countSearchVote", search);
 	}
 
 
