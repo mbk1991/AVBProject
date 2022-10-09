@@ -7,9 +7,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <body>
-    <div id="header"></div>
-    <div id="contents">
+    <div id="header">
+    	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+    </div>
+    <div id="contents" class="container">
         <div id="wrap">
 <!-- 글 내용 -->
             <div id="detail-area">
@@ -38,33 +42,34 @@
             </div>
 <!-- 투표 영역 -->
             <div id="vote-area">
+            	<div><h2>투표에 참여해보세요!</h2></div>
             	<form action="/vote/join.do" method="post">
             		<input type="hidden" name="voteNo" value="${vote.voteNo}">
 					<div id="vote-wrap">
-						<div id="candiFirst">
+						<div id="candiFirst" class="raw">
+							<input type="radio" id="first" value="1" name="voteCheck" class="form-check-input me-1">
 							<label for="first">${vote.firstLabel }</label>
-							<input type="radio" id="first" value="1" name="voteCheck">
 						</div>
-						<div id="candiSecond">
+						<div id="candiSecond" class="raw">
+							<input type="radio" id="second" value="2" name="voteCheck" class="form-check-input me-1">
 							<label for="second">${vote.secondLabel }</label>
-							<input type="radio" id="second" value="2" name="voteCheck">
 						</div>
 						<c:if test="${vote.thirdLabel ne null }">
-							<div id="candiThird">
+							<div id="candiThird" class="raw">
+								<input type="radio" id="third" value="3" name="voteCheck" class="form-check-input me-1">
 								<label for="third">${vote.thirdLabel }</label>
-								<input type="radio" id="third" value="3" name="voteCheck">
 							</div>
 						</c:if>
 						<c:if test="${vote.fourthLabel ne null }">
-							<div id="candiFourth">
+							<div id="candiFourth" class="raw">
+								<input type="radio" id="fourth" value="4" name="voteCheck" class="form-check-input me-1">
 								<label for="fourth">${vote.fourthLabel }</label>
-								<input type="radio" id="fourth" value="4" name="voteCheck">
 							</div>
 						</c:if>
 						<c:if test="${vote.fifthLabel ne null }">
-							<div id="candiFifth">
+							<div id="candiFifth" class="raw">
+								<input type="radio" id="fifth" value="5" name="voteCheck" class="form-check-input me-1">
 								<label for="fifth">${vote.fifthLabel }</label>
-								<input type="radio" id="fifth" value="5" name="voteCheck">
 							</div>
 						</c:if>		
 						<button>투표하기</button>
@@ -77,7 +82,6 @@
         </div>
     </div>
     <div id="footer">
-  	  <a href="/vote/list.do">목록으로</a>
     </div>
 </body>
 <script>

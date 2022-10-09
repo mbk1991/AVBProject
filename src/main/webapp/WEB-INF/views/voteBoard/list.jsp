@@ -6,14 +6,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="header">
-    	 <a href="/">로그인화면으로</a>
+    	 	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
     </div>
-    <div id="contents">
+    <div id="contents" class="container">
+    	<h3>${paging.totalCount }개의 투표가 있어요.</h3>
         <div id="wrap">
-            <button onclick="location.href='/vote/writeView.do';">투표 올리기</button>
             <div id="search-wrap">
                 <input type="text">
                 <select name="" id="">
@@ -25,13 +27,13 @@
                 <button type="button">검색</button>
             </div>
             <div id="board-wrap">
-                <table>
+                <table class="table table-hover">
                     <tr>
-                        <th width="500px">제목</th>
-                        <th>작성자</th>
-                        <th>투표진행상태</th>
-                        <th>조회수</th>
-                        <th>댓글수</th>
+                        <th class="col-4">제목</th>
+                        <th class="col">작성자</th>
+                        <th class="col">투표진행상태</th>
+                        <th class="col">조회수</th>
+                        <th class="col">댓글수</th>
                     </tr>
 					<c:forEach items="${vList }"  var="vote" >
 	                    <tr onclick="location.href='/vote/detail.do?voteNo='+${vote.voteNo }+'';">
@@ -53,9 +55,20 @@
                 </table>
             </div>
         </div>
+<!-- 페이징 -->
+		<div id="paging">
+			<c:if test="${paging.startNavi > paging.startPage}">
+				<a href="/vote/list.do?page=${paging.startNavi -1}"><<</a>
+			</c:if>
+			<c:forEach begin="${paging.startNavi }" end="${paging.endNavi }" var="n">
+				<a href="/vote/list.do?page=${n }">${n}</a>
+			</c:forEach>
+			<c:if test="${paging.endNavi < paging.endPage}">
+				<a href="/vote/list.do?page=${paging.endNavi +1}">>></a>
+			</c:if>
+		</div>
     </div>
     <div id="footer">
-      	<a href="/">로그인화면으로</a>
     </div>
 </body>
 </html>

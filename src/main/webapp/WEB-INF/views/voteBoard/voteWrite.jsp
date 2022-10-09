@@ -6,9 +6,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <body>
-    <div id="header"></div>
-    <div id="contents">
+    <div id="header">
+    	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+    </div>
+    <div id="contents" class="container">
         <div id="wrap">
             <form action="/vote/write.do" method="post">
             	제목
@@ -20,18 +24,6 @@
                 투표인원
 				<input type="text" id="participantLimit" name="participantLimit" readonly value="5"><br>
                 <input type="range" min="5" max="100" step="5"  value="5" oninput="document.querySelector('#participantLimit').value=this.value;">
-<!--  				<select id="participantLimit" name="participantLimit"> -->
-<!--  					<option value="3">3</option> -->
-<!--  					<option value="5">5</option> -->
-<!--  					<option value="7">7</option> -->
-<!--  					<option value="9">9</option> -->
-<!--  					<option value="11">11</option> -->
-<!--  					<option value="13">13</option> -->
-<!--  					<option value="15">15</option> -->
-<!--  					<option value="17">17</option> -->
-<!--  					<option value="19">19</option> -->
-<!--  					<option value="21">21</option> -->
-<!--  				</select> -->
                 <br>
                 <div id="voteCandi-wrap">
                     <input type="text"   id="firstLabel"  name="firstLabel"  placeholder="후보1" required><br>
@@ -49,7 +41,6 @@
         </div>
     </div>
     <div id="footer">
-		<a href="/vote/list.do">목록으로</a>
     </div>
 </body>
 <script>

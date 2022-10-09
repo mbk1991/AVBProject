@@ -3,12 +3,14 @@ package com.tistory.mabb.avb.board.store.logic;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.tistory.mabb.avb.board.domain.VoteBoard;
 import com.tistory.mabb.avb.board.domain.VoteReply;
 import com.tistory.mabb.avb.board.store.AvbStore;
+import com.tistory.mabb.avb.common.Paging;
 
 @Repository
 public class AvbStoreLogic implements AvbStore{
@@ -19,8 +21,9 @@ public class AvbStoreLogic implements AvbStore{
 	}
 
 	@Override
-	public List<VoteBoard> selectAllVote(SqlSession session) {
-		return session.selectList("VoteMapper.selectAllVote");
+	public List<VoteBoard> selectAllVote(SqlSession session,Paging paging) {
+		
+		return session.selectList("VoteMapper.selectAllVote",null,new RowBounds(paging.getOffset(),paging.getPageLimit()));
 	}
 
 	@Override
@@ -113,6 +116,7 @@ public class AvbStoreLogic implements AvbStore{
 	public int deleteReply(SqlSession session, Integer replyNo) {
 		return session.delete("VoteReplyMapper.deleteReply",replyNo);
 	}
+
 
 
 

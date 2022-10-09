@@ -10,6 +10,7 @@ import com.tistory.mabb.avb.board.domain.VoteBoard;
 import com.tistory.mabb.avb.board.domain.VoteReply;
 import com.tistory.mabb.avb.board.service.AvbService;
 import com.tistory.mabb.avb.board.store.AvbStore;
+import com.tistory.mabb.avb.common.Paging;
 
 @Service
 public class AvbServiceImpl implements AvbService {
@@ -24,8 +25,8 @@ public class AvbServiceImpl implements AvbService {
 	}
 
 	@Override
-	public List<VoteBoard> printAllVote() {
-		return aStore.selectAllVote(session);
+	public List<VoteBoard> printAllVote(Paging paging) {
+		return aStore.selectAllVote(session,paging);
 	}
 
 	@Override
@@ -73,10 +74,6 @@ public class AvbServiceImpl implements AvbService {
 		return aStore.selectOriginalReply(session, voteNo);
 	}
 	
-	@Override
-	public List<VoteReply> printReReply(Integer voteNo, Integer replyNo) {
-		return aStore.selectReReply(session, voteNo, replyNo);
-	}
 
 	@Override
 	public int registerOriginalReply(VoteReply vReply) {

@@ -8,9 +8,13 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <body>
-    <div id="header"></div>
-    <div id="contents">
+    <div id="header">
+    	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+    </div>
+    <div id="contents" class="container">
         <div id="wrap">
 <!-- 글 내용 -->
             <div id="detail-area">
@@ -39,10 +43,11 @@
             </div>
 <!-- 투표결과 -->
             <div id="result-area">
-            	<table id="resultTable"  border="1px">
+            	<div><h2>투표가 완료되었어요</h2></div>
+            	<table id="resultTable"  class="table table-hover" border="1px">
             		<tr>
             			<th>항목</th>
-            			<th>나의 표</th>
+            			<th>나의 투표</th>
             			<th>득표수</th>
             			<th>최다득표</th>
             		</tr>
@@ -102,7 +107,7 @@
 						
 						<div class="reReply-area">
 <!-- 답글 리스트						 -->
-							<li class="reReply">
+							<li class="reReply list-group-item">
 								<div class="info">
 									<div>작성자</div>
 									<div>날짜</div>
@@ -123,7 +128,6 @@
         </div>
     </div>
     <div id="footer">
-    	<a href="/vote/list.do">목록으로</a>
     </div>
 </body>
 <script>
@@ -146,8 +150,8 @@
 					$("#replyCount").text("댓글 ("+vList.length+")");
 					for(var i in vList){
 						if(vList[i].reReplyYn == 'N'){
-							var $li = $("<li class='reply'>");
-							var $divInfo = $("<div class='info'>").html("<div>"+vList[i].replyWriter+"</div><div>"+vList[i].replyTime+"</div>");
+							var $li = $("<li class='reply list-group-item'>");
+							var $divInfo = $("<div class='info'>").html("<h4 class='mb-2'>"+vList[i].replyWriter+"</h4><small>"+vList[i].replyTime+"</small>");
 							var $divContents =$("<div class='contents'>").text(vList[i].replyContents);
 							var $arcodianReReply = $("<button class='reBtn' onclick='reReplyList(this);'>답글 달기</button>");
 							var $divReReplyArea = $("<div class='reReply' style='display:none;'>").html("<div class='reReplyList'></div><div class='reReplyInput'><input type='text' placeholder='답글을 입력해보세요.'><button onclick='submitReReply(this,"+vList[i].replyNo+");'>답글등록</button></div>");
@@ -160,8 +164,8 @@
 						}else{
 							reReplyCount++;
 							var $lastReReplyList = $(".reReplyList").last();
-							var $li = $("<li class='reReply'>");
-							var $divInfo = $("<div class='info'>").html("<div>"+vList[i].replyWriter+"</div><div>"+vList[i].replyTime+"</div>");
+							var $li = $("<li class='reReply list-group-item'>");
+							var $divInfo = $("<div class='info'>").html("<h5 class='mb-2'>└"+vList[i].replyWriter+"</h5><small>"+vList[i].replyTime+"</small>");
 							var $divContents =$("<div class='contents'>").text(vList[i].replyContents);
 							$li.append($divInfo);
 							$li.append($divContents);

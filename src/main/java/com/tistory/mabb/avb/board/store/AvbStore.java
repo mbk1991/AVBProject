@@ -6,12 +6,13 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.tistory.mabb.avb.board.domain.VoteBoard;
 import com.tistory.mabb.avb.board.domain.VoteReply;
+import com.tistory.mabb.avb.common.Paging;
 
 public interface AvbStore {
 	public int insertVote(SqlSession session, VoteBoard vote);
 	public int insertParticipant(SqlSession session,String loginNickname, Integer voteNo, Integer voteCheck);
 	
-	public List<VoteBoard> selectAllVote(SqlSession session);
+	public List<VoteBoard> selectAllVote(SqlSession session,Paging paging);
 	public int countAllVote(SqlSession session);
 	public int selectParticipantCheck(SqlSession session,String loginUserNickname, Integer voteNo);
 	public VoteBoard selectOneVote(SqlSession session,int voteNo);
@@ -22,7 +23,6 @@ public interface AvbStore {
 
 	//댓글
 	public List<VoteReply> selectOriginalReply(SqlSession session, Integer voteNo);
-	public List<VoteReply> selectReReply(SqlSession session, Integer voteNo, Integer refReplyNo);
 	public int insertOriginalReply(SqlSession session, VoteReply vReply);
 	public int insertReReply(SqlSession session, VoteReply vReply);
 	public int updateReply(SqlSession session, VoteReply vReply);

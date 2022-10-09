@@ -7,9 +7,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <body>
-    <div id="header"></div>
-    <div id="contents">
+    <div id="header">
+    	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+    </div>
+    <div id="contents" class="container">
         <div id="wrap">
 <!-- 글 내용 -->
             <div id="detail-area">
@@ -32,17 +36,17 @@
 					</tr>
 					<tr>
 						<td>투표진행상태</td>
-						${userChoice }유저투표번호
 						<td>${vote.sumCount } / ${vote.participantLimit }</td>
 					</tr>            	
             	</table>
             </div>
 <!-- 투표 영역 -->
             <div id="result-area">
-            	<table id="resultTable"  border="1px">
+            	<div><h2>투표가 진행중이에요</h2></div>
+            	<table id="resultTable"  class="table table-hover" border="1px">
             		<tr>
             			<th>항목</th>
-            			<th>나의 표</th>
+            			<th>나의 투표</th>
             			<th>득표수</th>
             			<th>최다득표</th>
             		</tr>
@@ -91,7 +95,6 @@
         </div>
     </div>
     <div id="footer">
-    	<a href="/vote/list.do">목록으로</a>
     </div>
 </body>
 </html>

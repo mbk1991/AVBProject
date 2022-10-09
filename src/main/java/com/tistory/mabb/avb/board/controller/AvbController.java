@@ -20,6 +20,7 @@ import com.google.gson.GsonBuilder;
 import com.tistory.mabb.avb.board.domain.VoteBoard;
 import com.tistory.mabb.avb.board.domain.VoteReply;
 import com.tistory.mabb.avb.board.service.AvbService;
+import com.tistory.mabb.avb.common.Paging;
 import com.tistory.mabb.avb.member.domain.Member;
 
 @Controller
@@ -35,13 +36,16 @@ public class AvbController {
 	 * @return
 	 */
 	@RequestMapping(value = "/vote/list.do", method = RequestMethod.GET)
-	public ModelAndView listView(ModelAndView mv) {
-
-		List<VoteBoard> vList = aService.printAllVote();
+	public ModelAndView listView(ModelAndView mv,
+			@RequestParam(value="page",required=false) Integer currentPage) {
+		int page = (currentPage != null)? currentPage : 1;
+		Paging paging = new Paging(aService.countAllVote(), page, 10, 5);
+		
+		List<VoteBoard> vList = aService.printAllVote(paging);
 		if (!vList.isEmpty()) {
-			mv.addObject("vList", vList).setViewName("/voteBoard/list");
+			mv.addObject("paging",paging).addObject("vList", vList).setViewName("/voteBoard/list");
 		} else {
-			mv.addObject("vList", null).setViewName("/voteBoard/list");
+			mv.addObject("paging",paging).addObject("vList", null).setViewName("/voteBoard/list");
 		}
 		return mv;
 	}
@@ -220,7 +224,11 @@ public class AvbController {
 	
 //댓글////////////////////////////////////
 	
-	
+	/**
+	 * 원댓글 등록 ajax
+	 * @param vReply
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/reply/registerOrigin.do",method=RequestMethod.POST)
 	public String registerOriginalReply(@ModelAttribute VoteReply vReply) {
@@ -235,6 +243,11 @@ public class AvbController {
 		}
 	}
 	
+	/**
+	 * 답글 등록 ajax
+	 * @param vReply
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/reply/registerReReply.do",method=RequestMethod.POST)
 	public String registerReReply(@ModelAttribute VoteReply vReply) {
@@ -249,7 +262,11 @@ public class AvbController {
 		}
 	}
 	
-	
+	/**
+	 * 댓글 리스트 ajax
+	 * @param voteNo
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/reply/list.do",produces="application/json;charset=utf-8", method=RequestMethod.GET)
 	public String replyList(@RequestParam("voteNo") Integer voteNo) {
@@ -259,22 +276,6 @@ public class AvbController {
 		List<VoteReply> vList = aService.printOriginalReply(voteNo);
 		if(!vList.isEmpty()) {
 			
-			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
-			return gson.toJson(vList);
-		}else {
-			return null;
-		}
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/reply/reReplylist.do",produces="application/json;charset=utf-8", method=RequestMethod.GET)
-	public String reReplyList(@RequestParam("voteNo") Integer voteNo,
-			@RequestParam("refReplyNo") Integer refReplyNo) {
-		
-		System.out.println(voteNo);
-		
-		List<VoteReply> vList = aService.printReReply(voteNo, refReplyNo);
-		if(!vList.isEmpty()) {
 			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
 			return gson.toJson(vList);
 		}else {

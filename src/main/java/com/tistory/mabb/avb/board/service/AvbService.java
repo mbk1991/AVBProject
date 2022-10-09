@@ -4,12 +4,13 @@ import java.util.List;
 
 import com.tistory.mabb.avb.board.domain.VoteBoard;
 import com.tistory.mabb.avb.board.domain.VoteReply;
+import com.tistory.mabb.avb.common.Paging;
 
 public interface AvbService {
 	public int registerVote(VoteBoard vote);
 	public int registerParticipant(String loginNickname, Integer voteNo, Integer voteCheck);
-	
-	public List<VoteBoard> printAllVote();
+
+	public List<VoteBoard> printAllVote(Paging paging);
 	public int countAllVote();
 	public int participantCheck(String loginUserNickname, Integer voteNo);
 	public VoteBoard printOneVote(int voteNo);
@@ -20,7 +21,6 @@ public interface AvbService {
 	
 	//댓글
 	public List<VoteReply> printOriginalReply(Integer voteNo);
-	public List<VoteReply> printReReply(Integer voteNo, Integer refReplyNo);
 	public int registerOriginalReply(VoteReply vReply);
 	public int registerReReply(VoteReply vReply);
 	public int modifyReply(VoteReply vReply);
