@@ -11,104 +11,99 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <link href="/resources/css/common.css" rel="stylesheet">
+
+
+<style>
+
+/* .graph{ */
+/* 	background-color:gray; */
+/* 	height:50px; */
+/* } */
+</style>
+
 <body>
     <div id="header" class="container">
     	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
     </div>
     <div id="contents" class="container">
         <div id="wrap">
+	    <h2>투표가 완료되었어요.(${vote.sumCount } / ${vote.participantLimit })</h2><br>
 <!-- 글 내용 -->
-<h1>${vote.voteWriter }님의 투표</h1>
         <div id="wrap">
-            	<div class="text-wrap">
-	            	<input type="text" id="voteTitle"  readonly value="${vote.voteTitle }" >
-            	</div>
-            	<div class="text-wrap">
-	            	<textarea id="voteContents"  readonly style="height:100%;width:100%;border-style:none;">${vote.voteContents }</textarea>
-            	</div>
-                <div class="text-wrap">
-                	<h3>투표 진행 현황</h3>
-                	${vote.sumCount } / ${vote.participantLimit }
-                </div><br>
-                <h1>투표 항목</h1>
-                <div id="voteCandi-wrap">
-                	<div class="text-wrap">
-	                    <input type="text"   id="firstLabel"  name="firstLabel"  placeholder="후보1" required>
-                	</div>
-                	<div class="text-wrap">
-	                    <input type="text"   id="secondLabel" name="secondLabel" placeholder="후보2" required>
-                	</div>
-                
-                </div>
-                
             <div id="detail-area">
-            	<table>
+            	<table class="table table-hover">
 					<tr>
-						<td>제목</td>
-						<td>${vote.voteTitle }</td>
+						<td><h1>${vote.voteTitle }</h1></td>
 					</tr>
 					<tr>
-						<td>작성자</td>
-						<td>${vote.voteWriter }</td>
-						
+						<td>
+							<div style="height:150px;">
+								${vote.voteContents }
+							</div>
+						</td>
 					</tr>
 					<tr>
-						<td colspan="2">${vote.voteContents }</td>
+						<td>└ ${vote.voteWriter }  ${vote.voteTime }</td>
 					</tr>
-					<tr>
-						<td colspan="2">조회수: ${vote.viewCount } 댓글수: ${vote.replyCount } 날짜: ${vote.voteTime }</td>
-					</tr>
-					</tr>
-					<tr>
-						<td>투표진행상태</td>
-						<td>${vote.sumCount } / ${vote.participantLimit }</td>
-					</tr>            	
             	</table>
             </div>
 <!-- 투표결과 -->
             <div id="result-area">
-            	<div><h2>투표가 완료되었어요</h2></div>
             	<table id="resultTable"  class="table table-hover" border="1px">
             		<tr>
-            			<th>항목</th>
-            			<th>나의 투표</th>
-            			<th>득표수</th>
-            			<th>최다득표</th>
-            		</tr>
-            		<tr>
-            			<td>${vote.firstLabel }</td>
-            			<td><c:if test="${userChoice eq 1 }">V</c:if></td>
-            			<td>${vote.firstCount }</td>
-            			<td><c:if test="${vote.firstCount eq mostCount }">V</c:if></td>
+            			<div style="text-align:left">1. ${vote.firstLabel }</div>
+            			<div class="graph">
+            				<div id="firstProgress" class="progress"></div>
+            			</div>
+            			<div class="markWrap">
+	            			<div class="best">best</div>
+	            			<div class="mine">mine</div>
+            			</div>
             		</tr>
                		<tr>
-            			<td>${vote.secondLabel }</td>
-            			<td><c:if test="${userChoice eq 2 }">V</c:if></td>
-            			<td>${vote.secondCount }</td>
-            			<td><c:if test="${vote.secondCount eq mostCount }">V</c:if></td>
+            			<div style="text-align:left">2. ${vote.secondLabel }</div>
+            			<div class="graph">
+            				<div id="secondProgress" class="progress"></div>
+            			</div>
+            			<div class="markWrap">
+	            			<div class="best">best</div>
+	            			<div class="mine">mine</div>
+            			</div>
             		</tr>
             		<c:if test="${vote.thirdLabel ne null }">
 	            		<tr>
-	            			<td>${vote.thirdLabel }</td>
-	            			<td><c:if test="${userChoice eq 3 }">V</c:if></td>
-	            			<td>${vote.thirdCount }</td>
-	            			<td><c:if test="${vote.thirdCount eq mostCount }">V</c:if></td>
-	            		</tr>
+            			<div style="text-align:left">3. ${vote.thirdLabel }</div>
+            			<div class="graph">
+            				<div id="thirdProgress" class="progress"></div>
+            			</div>
+            			<div class="markWrap">
+	            			<div class="best">best</div>
+	            			<div class="mine">mine</div>
+            			</div>
+            		</tr>
 	            	</c:if>
 	            	<c:if test="${vote.fourthLabel ne null }">
             		<tr>
-            			<td>${vote.fourthLabel }</td>
-            			<td><c:if test="${userChoice eq 4 }">V</c:if></td>
-            			<td>${vote.fourthCount }</td>
-            			<td><c:if test="${vote.fourthCount eq mostCount }">V</c:if></td>
+            			<div style="text-align:left">1. ${vote.fourthLabel }</div>
+            			<div class="graph">
+            				<div id="fourthProgress" class="progress"></div>
+            			</div>
+            			<div class="markWrap">
+	            			<div class="best">best</div>
+	            			<div class="mine">mine</div>
+            			</div>
             		</tr>
             		</c:if>
             		<c:if test="${vote.fifthLabel ne null }">
             		<tr>
-            			<td>${vote.fifthLabel }</td>
-            			<td><c:if test="${userChoice eq 5 }">V</c:if></td>
-            			<td>${vote.fifthCount }</td>
-            			<td><c:if test="${vote.fifthCount eq mostCount }">V</c:if></td>
+            			<div style="text-align:left">1. ${vote.fifthLabel }</div>
+            			<div class="graph">
+            				<div id="fifthProgress" class="progress"></div>
+            			</div>
+            			<div class="markWrap">
+	            			<div class="best">best</div>
+	            			<div class="mine">mine</div>
+            			</div>
             		</tr>
             		</c:if>
             	</table><br>
@@ -148,13 +143,29 @@
 					</li>            	
             	</div>
             </div>
-            
         </div>
     </div>
     <div id="footer">
     </div>
 </body>
 <script>
+//게이지
+	fillGage();
+	function fillGage(){
+			var firstProgress = "${vote.firstCount}" / "${vote.participantLimit}";
+			var secondProgress = "${vote.secondCount}" / "${vote.participantLimit}";
+			var thirdProgress = "${vote.thirdCount}" / "${vote.participantLimit}";
+			var fourthProgress = "${vote.fourthCount}" / "${vote.participantLimit}";
+			var fifthProgress = "${vote.fifthCount}" / "${vote.participantLimit}";
+		
+			document.querySelector("#firstProgress").style.width=firstProgress*100+"%";
+			document.querySelector("#secondProgress").style.width=secondProgress*100+"%";
+			document.querySelector("#thirdProgress").style.width=thirdProgress*100+"%";
+			document.querySelector("#fourthProgress").style.width=fourthProgress*100+"%";
+			document.querySelector("#fifthProgress").style.width=fifthProgress*100+"%";
+			
+	}
+
 
 //댓글 리스트 출력 함수. 
 	var $replyList =  $("#replyList");

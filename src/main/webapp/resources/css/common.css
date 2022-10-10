@@ -87,3 +87,27 @@ button{
 		padding:20px;
 		color:blue;
 	}
+	
+.graph{
+	background-color:gray;
+	height:60px;
+	border-radius:7px;
+}
+	.progress{
+		height:60px;
+		background-color:gold;
+		border-radius:7px;
+	
+	}
+	
+	.markWrap{
+		position:relative; width:150px; float:right; bottom:90px;
+	}
+		.best{
+			width:48%; height:50px; background-color:red; color:white;  border-radius:25px; float:right;
+		}
+		.mine{
+			width: 48%; height:50px; background-color:green; color:white;  border-radius:25px;
+		}
+
+
