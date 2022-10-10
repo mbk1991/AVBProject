@@ -42,6 +42,14 @@ input[type="text"],input[type="password"]{
 	width:100%;
 	border-style:none;
 }
+
+textarea{
+		padding:7px;
+	width:100%;
+	border-style:none;
+	
+}
+
 #contents{
 	text-align:center;
 }
@@ -101,13 +109,19 @@ button{
 	}
 	
 	.markWrap{
-		position:relative; width:150px; float:right; bottom:90px;
+		position:relative; width:220px; float:right; bottom:90px;
 	}
 		.best{
-			width:48%; height:50px; background-color:red; color:white;  border-radius:25px; float:right;
+			width:30%; height:50px; background-color:red; color:white;  border-radius:25px; float:right;
 		}
 		.mine{
-			width: 48%; height:50px; background-color:green; color:white;  border-radius:25px;
+			width: 30%; height:50px; background-color:green; color:white;  border-radius:25px; float:right;
+		}
+		.count{
+			width: 30%; height:50px; background-color:white; border:1px solid black; border-radius:25px;float:right;
+		}
+		.voteCheck{
+			width: 30%; height:50px; background-color:white; border:1px solid black; border-radius:25px;float:right;
 		}
 
 

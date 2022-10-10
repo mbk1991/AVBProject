@@ -15,83 +15,86 @@
     	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
     </div>
     <div id="contents" class="container">
+    	<h2>투표가 진행중이에요.(${vote.sumCount } / ${vote.participantLimit })</h2>
         <div id="wrap">
 <!-- 글 내용 -->
             <div id="detail-area">
-            	<table>
+            	<table class="table table-hover">
 					<tr>
-						<td>제목</td>
-						<td>${vote.voteTitle }</td>
+						<td><h1>${vote.voteTitle }</h1></td>
 					</tr>
 					<tr>
-						<td>작성자</td>
-						<td>${vote.voteWriter }</td>
-						
+						<td>
+							<div style="height:150px;">
+								${vote.voteContents }
+							</div>
+						</td>
 					</tr>
 					<tr>
-						<td colspan="2">${vote.voteContents }</td>
+						<td>└ ${vote.voteWriter }  ${vote.voteTime }</td>
 					</tr>
-					<tr>
-						<td colspan="2">조회수: ${vote.viewCount } 댓글수: ${vote.replyCount } 날짜: ${vote.voteTime }</td>
-					</tr>
-					</tr>
-					<tr>
-						<td>투표진행상태</td>
-						<td>${vote.sumCount } / ${vote.participantLimit }</td>
-					</tr>            	
             	</table>
             </div>
 <!-- 투표 영역 -->
-            <div id="result-area">
-            	<div><h2>투표가 진행중이에요</h2></div>
+
+			 <div id="result-area">
             	<table id="resultTable"  class="table table-hover" border="1px">
             		<tr>
-            			<th>항목</th>
-            			<th>나의 투표</th>
-            			<th>득표수</th>
-            			<th>최다득표</th>
-            		</tr>
-            		<tr>
-            			<td>${vote.firstLabel }</td>
-            			<td><c:if test="${userChoice eq 1 }">V</c:if></td>
-            			<td>?</td>
-            			<td>?</td>
+            			<div style="text-align:left">1. ${vote.firstLabel }</div>
+            			<div class="graph">
+            			</div>
+            			<div class="markWrap">
+            				<div class="count">??표</div>
+	            			<c:if test="${userChoice eq 1 }"><div class="mine">mine</div></c:if>
+            			</div>
             		</tr>
                		<tr>
-            			<td>${vote.secondLabel }</td>
-            			<td><c:if test="${userChoice eq 2 }">V</c:if></td>
-            			<td>?</td>
-            			<td>?</td>
+            			<div style="text-align:left">2. ${vote.secondLabel }</div>
+            			<div class="graph">
+            			</div>
+            			<div class="markWrap">
+            				<div class="count">??표</div>
+	            			<c:if test="${userChoice eq 2 }"><div class="mine">mine</div></c:if>
+            			</div>
             		</tr>
             		<c:if test="${vote.thirdLabel ne null }">
 	            		<tr>
-	            			<td>${vote.thirdLabel }</td>
-	            			<td><c:if test="${userChoice eq 3 }">V</c:if></td>
-	            			<td>?</td>
-	            			<td>?</td>
-	            		</tr>
+            			<div style="text-align:left">3. ${vote.thirdLabel }</div>
+            			<div class="graph">
+            			</div>
+            			<div class="markWrap">
+            				<div class="count">??표</div>
+	            			<c:if test="${userChoice eq 3 }"><div class="mine">mine</div></c:if>
+            			</div>
+            		</tr>
 	            	</c:if>
 	            	<c:if test="${vote.fourthLabel ne null }">
             		<tr>
-            			<td>${vote.fourthLabel }</td>
-            			<td><c:if test="${userChoice eq 4 }">V</c:if></td>
-            			<td>?</td>
-            			<td>?</td>
+            			<div style="text-align:left">1. ${vote.fourthLabel }</div>
+            			<div class="graph">
+            			</div>
+            			<div class="markWrap">
+            				<div class="count">??표</div>
+	            			<c:if test="${userChoice eq 4 }"><div class="mine">mine</div></c:if>
+            			</div>
             		</tr>
             		</c:if>
             		<c:if test="${vote.fifthLabel ne null }">
             		<tr>
-            			<td>${vote.fifthLabel }</td>
-            			<td><c:if test="${userChoice eq 5 }">V</c:if></td>
-            			<td>?</td>
-            			<td>?</td>
+            			<div style="text-align:left">1. ${vote.fifthLabel }</div>
+            			<div class="graph">
+            			</div>
+            			<div class="markWrap">
+            				<div class="count">??표</div>
+	            			<c:if test="${userChoice eq 5 }"><div class="mine">mine</div></c:if>
+            			</div>
             		</tr>
             		</c:if>
-            	</table>
+            	</table><br>
             </div>
 <!-- 댓글 -->
             <div id="reply">
-            	<span>투표가 완료되면 댓글창이 오픈됩니다!</span>
+            	<h2>투표가 완료되면 댓글창이 오픈됩니다!</h2>
             </div>
         </div>
     </div>

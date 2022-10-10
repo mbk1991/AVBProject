@@ -11,7 +11,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <link href="/resources/css/common.css" rel="stylesheet">
-
+<script src="/resources/js/common.js"></script>
 
 <style>
 
@@ -56,8 +56,9 @@
             				<div id="firstProgress" class="progress"></div>
             			</div>
             			<div class="markWrap">
-	            			<div class="best">best</div>
-	            			<div class="mine">mine</div>
+            				<div class="count">${vote.firstCount }표</div>
+	            			<c:if test="${vote.firstCount eq mostCount}"> <div class="best">best</div></c:if>
+	            			<c:if test="${userChoice eq 1 }"><div class="mine">mine</div></c:if>
             			</div>
             		</tr>
                		<tr>
@@ -66,8 +67,9 @@
             				<div id="secondProgress" class="progress"></div>
             			</div>
             			<div class="markWrap">
-	            			<div class="best">best</div>
-	            			<div class="mine">mine</div>
+            				<div class="count">${vote.secondCount }표</div>
+	            			<c:if test="${vote.secondCount eq mostCount}"> <div class="best">best</div></c:if>
+	            			<c:if test="${userChoice eq 2 }"><div class="mine">mine</div></c:if>
             			</div>
             		</tr>
             		<c:if test="${vote.thirdLabel ne null }">
@@ -77,8 +79,9 @@
             				<div id="thirdProgress" class="progress"></div>
             			</div>
             			<div class="markWrap">
-	            			<div class="best">best</div>
-	            			<div class="mine">mine</div>
+            				<div class="count">${vote.thirdCount }표</div>
+	            			<c:if test="${vote.thirdCount eq mostCount}"> <div class="best">best</div></c:if>
+	            			<c:if test="${userChoice eq 3 }"><div class="mine">mine</div></c:if>
             			</div>
             		</tr>
 	            	</c:if>
@@ -89,8 +92,9 @@
             				<div id="fourthProgress" class="progress"></div>
             			</div>
             			<div class="markWrap">
-	            			<div class="best">best</div>
-	            			<div class="mine">mine</div>
+            				<div class="count">${vote.fourthCount }표</div>
+	            			<c:if test="${vote.fourthCount eq mostCount}"> <div class="best">best</div></c:if>
+	            			<c:if test="${userChoice eq 4 }"><div class="mine">mine</div></c:if>
             			</div>
             		</tr>
             		</c:if>
@@ -101,19 +105,25 @@
             				<div id="fifthProgress" class="progress"></div>
             			</div>
             			<div class="markWrap">
-	            			<div class="best">best</div>
-	            			<div class="mine">mine</div>
+            				<div class="count">${vote.fifthCount }표</div>
+	            			<c:if test="${vote.fifthCount eq mostCount}"> <div class="best">best</div></c:if>
+	            			<c:if test="${userChoice eq 5 }"><div class="mine">mine</div></c:if>
             			</div>
             		</tr>
             		</c:if>
             	</table><br>
             </div>
 <!-- 댓글 -->
-            <div id="reply">
+            <div id="reply" style="text-align:left;">
             	<div id="replyCount"></div>
-                <div id="replyInput">
-	            	<input id="replyContents" type="text" name="replyContents" placeholder="댓글을 입력해보세요" >
-	            	<button id="submitReply" type="button">댓글등록</button>
+                <div id="replyInput" style="margin:20px">
+                	<div class="text-wrap">
+		            	<textarea onkeyup="textareaCheck(this);" id="replyContents" type="text" name="replyContents"  required placeholder="댓글을 입력해보세요(300자" ></textarea>
+                	</div>
+                	<div style="text-align:right;">
+<!--                 		<span style="float:left;">(0/300)</span> -->
+		            	<button onclick="submitReply();" type="button" style="width:150px; height:50px;">댓글등록</button>
+                	</div>
 	            </div>
             	<div id="replyList">
 					<li class="Reply">
@@ -123,23 +133,6 @@
 						</div>
 						<div class="contents"> 댓글 내용입니다.</div>
 						<div><a href="#">답글</a></div>
-						
-						<div class="reReply-area">
-<!-- 답글 리스트						 -->
-							<li class="reReply list-group-item">
-								<div class="info">
-									<div>작성자</div>
-									<div>날짜</div>
-								</div>
-								<div class="contents"> 답글 내용입니다.</div>
-							</li>
-							
-<!-- 답글 입력창					 -->
-							<div>
-								<input type="text" name="reReplyContents" placeholder="답글을 입력해보세요" >
-							</div>
-						</div>
-						
 					</li>            	
             	</div>
             </div>
@@ -149,7 +142,13 @@
     </div>
 </body>
 <script>
+
+
 //게이지
+	var $replyList =  $("#replyList");
+	$replyList.html("");
+	printReplyList();
+
 	fillGage();
 	function fillGage(){
 			var firstProgress = "${vote.firstCount}" / "${vote.participantLimit}";
@@ -168,10 +167,6 @@
 
 
 //댓글 리스트 출력 함수. 
-	var $replyList =  $("#replyList");
-	$replyList.html("");
-	printReplyList();
-
 	function printReplyList(){
 		var voteNo = "${vote.voteNo}";
 		$.ajax({
@@ -188,8 +183,8 @@
 							var $li = $("<li class='reply list-group-item'>");
 							var $divInfo = $("<div class='info'>").html("<h4 class='mb-2'>"+vList[i].replyWriter+"</h4><small>"+vList[i].replyTime+"</small>");
 							var $divContents =$("<div class='contents'>").text(vList[i].replyContents);
-							var $arcodianReReply = $("<button class='reBtn' onclick='reReplyList(this);'>답글 달기</button>");
-							var $divReReplyArea = $("<div class='reReply' style='display:none;'>").html("<div class='reReplyList'></div><div class='reReplyInput'><input type='text' placeholder='답글을 입력해보세요.'><button onclick='submitReReply(this,"+vList[i].replyNo+");'>답글등록</button></div>");
+							var $arcodianReReply = $("<button style='width:150px; height:50px;'  class='reBtn' onclick='reReplyList(this);'>답글 달기</button>");
+							var $divReReplyArea = $("<div class='reReply' style='display:none;'>").html("<div class='reReplyList'></div><div class='reReplyInput'><div class='text-wrap'><textarea onkeyup='textareaCheck(this);' required placeholder='답글을 입력해보세요.(300자)'></textarea></div><div style='text-align:right;'><button style='width:150px; height:50px;' onclick='submitReReply(this,"+vList[i].replyNo+");'>답글등록</button></div></div>");
 							$li.append($divInfo);
 							$li.append($divContents);
 							$li.append($arcodianReReply);
@@ -232,8 +227,8 @@
 	
 	
 //댓글 등록버튼 이벤트
-	var submitReply = $("#submitReply").on("click",function(){
-		
+
+	function submitReply(){
 		var voteNo = "${vote.voteNo}";
 		var replyMemberId = "${loginUser.memberId}";
 		var replyWriter = "${loginUser.nickName}";
@@ -254,6 +249,7 @@
 					
 					$replyList.html("");
 					printReplyList();
+					$("#replyContents").val("");
 				}else{
 					console.log("실패");
 				}
@@ -261,8 +257,7 @@
 			error:function(){}
 			
 		});
-		
-	});
+	}
 
 //답글 등록버튼 onclick 이벤트 동작 함수
 	function submitReReply(thisButton,refReplyNo){
@@ -270,7 +265,7 @@
 		var voteNo = "${vote.voteNo}";
 		var replyMemberId = "${loginUser.memberId}";
 		var replyWriter = "${loginUser.nickName}";
-		var replyContents = thisButton.previousSibling.value;
+		var replyContents = thisButton.parentNode.previousSibling.firstChild.value;
 		console.log(replyContents);
 		
 		$.ajax({
@@ -294,11 +289,7 @@
 				}
 			},
 			error:function(){}
-			
 		});
-	
-
-		
 	}
 
 

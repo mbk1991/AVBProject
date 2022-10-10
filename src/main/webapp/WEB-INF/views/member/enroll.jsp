@@ -6,9 +6,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <link href="/resources/css/common.css" rel="stylesheet">
+<script src="/resources/js/common.js"></script>
 <body>
     <div id="header" class="container"></div>
     <div id="contents" class="container">
@@ -16,14 +18,14 @@
         <div id="wrap">
             <form id="enrollForm" action="/member/nickname/register.do" method="post">
             	<div class="text-wrap">
-	                <input type="text" id="id"  name="memberId" placeholder="아이디는 영소문자,숫자 4~16자입니다." onblur="idCheck(this);"  required>
+	                <input type="text" id="id"  name="memberId" placeholder="아이디는 영소문자,숫자 4~16자입니다." onblur="idCheck(this);"  onkeyup="textCheck(this);" required>
             	</div>
                 <div id="idCheck" class="checkTxt" ></div>
                 <div class="text-wrap">
-    	            <input type="password" id="pwd" name="memberPwd"   placeholder="비밀번호는 영문,숫자 4~12자입니다." onblur="pwdCheck(this);" ><br>
+    	            <input type="password" id="pwd" name="memberPwd"   placeholder="비밀번호는 영문,숫자 4~12자입니다." onblur="pwdCheck(this);"  onkeyup="textCheck(this);"><br>
                 </div>
                 <div class="text-wrap">
-	                <input type="password" id="rePwd" placeholder="비밀번호를 재입력하세요." onblur="rePwdCheck(this)"  required >
+	                <input type="password" id="rePwd" placeholder="비밀번호를 재입력하세요." onblur="rePwdCheck(this)" onkeyup="textCheck(this);"  required >
                 </div>
                 <div id="pwdCheck" class="checkTxt"></div>
         		<div class="text-wrap">
@@ -40,6 +42,25 @@
 
 
 <script>
+
+//text 및 textarea 글자수 제한.
+function textareaCheck(thisText){
+	$("#typingCount").text($(thisText).val().length);
+	if($(thisText).val().length>28){
+		$(thisText).val($(thisText).val().substring(0,28));
+	}
+}
+
+function textCheck(thisText){
+	if($(thisText).val().length>28){
+		$(thisText).val($(thisText).val().substring(0,28));
+	}
+}
+
+
+
+
+
 function enrollCheck(){
 	var nickname = document.querySelector("#nickname");
 	if(nickname.value != ""){

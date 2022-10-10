@@ -6,9 +6,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <link href="/resources/css/common.css" rel="stylesheet">
+<script src="/resources/js/common.js"></script>
 <body>
     <div id="header" class="container">
     	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
@@ -19,12 +21,15 @@
             <form action="/vote/write.do" method="post">
            
             	<div class="text-wrap">
-	            	<input type="text" id="voteTitle" name="voteTitle" placeholder="제목을 입력하세요.(30자)" required>
+	            	<input onkeyup="textCheck(this)" type="text" id="voteTitle" name="voteTitle" placeholder="제목을 입력하세요.(30자)" required>
 	            	<input type="hidden" id="memberId" name="memberId" value="${loginUser.memberId }">
 	                <input type="hidden" id="voteWriter" name="voteWriter" value="${loginUser.nickName }">
             	</div>
             	<div class="text-wrap">
-	            	<textarea id="voteContents" name="voteContents" placeholder="내용을 입력하세요.(30자)" required style="height:100%;width:100%;border-style:none;"></textarea>
+	            	<textarea id="voteContents"  onkeyup="textareaCheck(this);" name="voteContents" placeholder="내용을 입력하세요.(300자)" required style="height:100%;width:100%;border-style:none;"></textarea>
+            	</div>
+            	<div style="text-align:left;">
+	            	(<span id="typingCount">0</span>/300)
             	</div>
                 <div class="text-wrap">
                 	<h3>투표 인원을 설정하세요.</h3>
@@ -34,19 +39,19 @@
                 <h1>투표 항목을 만들어보세요.</h1>
                 <div id="voteCandi-wrap">
                 	<div class="text-wrap">
-	                    <input type="text"   id="firstLabel"  name="firstLabel"  placeholder="후보1" required>
+	                    <input onkeyup="textCheck(this)" type="text"   id="firstLabel"  name="firstLabel"  placeholder="후보1" required>
                 	</div>
                 	<div class="text-wrap">
-	                    <input type="text"   id="secondLabel" name="secondLabel" placeholder="후보2" required>
+	                    <input onkeyup="textCheck(this)" type="text"   id="secondLabel" name="secondLabel" placeholder="후보2" required>
                 	</div>
                 	<div class="text-wrap">
-	                    <input type="hidden" id="thirdLabel"  class="addList" name="thirdLabel"  placeholder="후보3" >
+	                    <input onkeyup="textCheck(this)" type="hidden" id="thirdLabel"  class="addList" name="thirdLabel"  placeholder="후보3" >
                 	</div>
                 	<div class="text-wrap">
-	                    <input type="hidden" id="fourthLabel" class="addList" name="fourthLabel" placeholder="후보4" >
+	                    <input onkeyup="textCheck(this)" type="hidden" id="fourthLabel" class="addList" name="fourthLabel" placeholder="후보4" >
                 	</div>
                 	<div class="text-wrap">
-	                    <input type="hidden" id="fifthLabel"  class="addList" name="fifthLabel"  placeholder="후보5" >
+	                    <input onkeyup="textCheck(this)" type="hidden" id="fifthLabel"  class="addList" name="fifthLabel"  placeholder="후보5" >
                 	</div>
                 </div>
                 <button class="btn btn-light" type="button" onclick="addList();">항목추가</button>
@@ -60,6 +65,8 @@
     </div>
 </body>
 <script>
+//text 및 textarea 글자수 제한.
+
 
 	var index=1;
 	function addList(){

@@ -5,9 +5,11 @@
 <head>
 	<title>Home</title>
 </head>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <link href="/resources/css/common.css" rel="stylesheet">
+<script src="/resources/js/common.js"></script>
 <body>
     <div id="header" class="container">
     
@@ -20,10 +22,10 @@
 	        	<div id="input-wrap">
 		            <form action="/member/login.do" method="post">
 		            	<div class="text-wrap">
-			                <input type="text" name="memberId" placeholder="아이디를 입력하세요." required>
+			                <input onkeyup="textCheck(this);" type="text" name="memberId" placeholder="아이디를 입력하세요." required>
 		            	</div>
 		            	<div class="text-wrap">
-			                <input type="password" name="memberPwd" placeholder="비밀번호를 입력하세요." required>
+			                <input onkeyup="textCheck(this);" type="password" name="memberPwd" placeholder="비밀번호를 입력하세요." required>
 		            	</div>
 		          		<c:if test=""></c:if>
 		                <button class="btn btn-success">로그인</button>
@@ -42,9 +44,4 @@
     </div>
     <div id="footer"></div>
 </body>
-
-<script>
-	
-</script>
-
 </html>
