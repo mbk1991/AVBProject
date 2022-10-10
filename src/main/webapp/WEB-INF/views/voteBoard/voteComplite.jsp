@@ -194,7 +194,7 @@
 						}else{
 							reReplyCount++;
 							var $lastReReplyList = $(".reReplyList").last();
-							var $li = $("<li class='reReply list-group-item'>");
+							var $li = $("<li class='reReply list-group-item' style='background-color:beige;'>");
 							var $divInfo = $("<div class='info'>").html("<h5 class='mb-2'>└"+vList[i].replyWriter+"</h5><small>"+vList[i].replyTime+"</small>");
 							var $divContents =$("<div class='contents'>").text(vList[i].replyContents);
 							$li.append($divInfo);
