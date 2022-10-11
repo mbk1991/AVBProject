@@ -13,13 +13,6 @@
 <link href="/resources/css/common.css" rel="stylesheet">
 <script src="/resources/js/common.js"></script>
 
-<style>
-
-/* .graph{ */
-/* 	background-color:gray; */
-/* 	height:50px; */
-/* } */
-</style>
 
 <body>
     <div id="header" class="container">
@@ -87,7 +80,7 @@
 	            	</c:if>
 	            	<c:if test="${vote.fourthLabel ne null }">
             		<tr>
-            			<div style="text-align:left">1. ${vote.fourthLabel }</div>
+            			<div style="text-align:left">4. ${vote.fourthLabel }</div>
             			<div class="graph">
             				<div id="fourthProgress" class="progress"></div>
             			</div>
@@ -100,7 +93,7 @@
             		</c:if>
             		<c:if test="${vote.fifthLabel ne null }">
             		<tr>
-            			<div style="text-align:left">1. ${vote.fifthLabel }</div>
+            			<div style="text-align:left">5. ${vote.fifthLabel }</div>
             			<div class="graph">
             				<div id="fifthProgress" class="progress"></div>
             			</div>
@@ -113,7 +106,7 @@
             		</c:if>
             	</table><br>
             </div>
-<!-- 댓글 -->
+<!-- 댓글입력창 -->
             <div id="reply" style="text-align:left;">
             	<div id="replyCount"></div>
                 <div id="replyInput" style="margin:20px">
@@ -121,20 +114,12 @@
 		            	<textarea onkeyup="textareaCheck(this);" id="replyContents" type="text" name="replyContents"  required placeholder="댓글을 입력해보세요(300자" ></textarea>
                 	</div>
                 	<div style="text-align:right;">
-<!--                 		<span style="float:left;">(0/300)</span> -->
+				   <!-- <span style="float:left;">(0/300)</span> -->
 		            	<button onclick="submitReply();" type="button" style="width:150px; height:50px;">댓글등록</button>
                 	</div>
 	            </div>
-            	<div id="replyList">
-					<li class="Reply">
-						<div class="info">
-							<div>작성자</div>
-							<div>날짜</div>
-						</div>
-						<div class="contents"> 댓글 내용입니다.</div>
-						<div><a href="#">답글</a></div>
-					</li>            	
-            	</div>
+<!-- 댓글목록 출력 -->
+            	<div id="replyList"></div>
             </div>
         </div>
     </div>
@@ -144,11 +129,12 @@
 <script>
 
 
-//게이지
 	var $replyList =  $("#replyList");
 	$replyList.html("");
 	printReplyList();
 
+	
+// 투표게이지 width 설정 함수.
 	fillGage();
 	function fillGage(){
 			var firstProgress = "${vote.firstCount}" / "${vote.participantLimit}";
@@ -162,7 +148,6 @@
 			document.querySelector("#thirdProgress").style.width=thirdProgress*100+"%";
 			document.querySelector("#fourthProgress").style.width=fourthProgress*100+"%";
 			document.querySelector("#fifthProgress").style.width=fifthProgress*100+"%";
-			
 	}
 
 
@@ -180,6 +165,7 @@
 					$("#replyCount").text("댓글 ("+vList.length+")");
 					for(var i in vList){
 						if(vList[i].reReplyYn == 'N'){
+							//원댓글
 							var $li = $("<li class='reply list-group-item'>");
 							var $divInfo = $("<div class='info'>").html("<h4 class='mb-2'>"+vList[i].replyWriter+"</h4><small>"+vList[i].replyTime+"</small>");
 							var $divContents =$("<div class='contents'>").text(vList[i].replyContents);
@@ -192,6 +178,7 @@
 							$replyList.append($li);
 							var reReplyCount = 0;
 						}else{
+							//답글
 							reReplyCount++;
 							var $lastReReplyList = $(".reReplyList").last();
 							var $li = $("<li class='reReply list-group-item' style='background-color:beige;'>");
@@ -220,10 +207,6 @@
 			$(thisBtn).next().css("display","none");
 		}
 	}
-	
-
-	
-
 	
 	
 //댓글 등록버튼 이벤트
@@ -261,7 +244,6 @@
 
 //답글 등록버튼 onclick 이벤트 동작 함수
 	function submitReReply(thisButton,refReplyNo){
-
 		var voteNo = "${vote.voteNo}";
 		var replyMemberId = "${loginUser.memberId}";
 		var replyWriter = "${loginUser.nickName}";

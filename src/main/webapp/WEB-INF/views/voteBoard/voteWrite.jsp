@@ -34,7 +34,7 @@
                 <div class="text-wrap">
                 	<h3>투표 인원을 설정하세요.</h3>
 					<input type="text" id="participantLimit" name="participantLimit" readonly value="5" style="width:60px;">
-	                <input type="range" min="5" max="100" step="5"  value="5" oninput="document.querySelector('#participantLimit').value=this.value;">
+	                <input type="range" min="5" max="100" step="5"  style="width:300px;" value="5" oninput="document.querySelector('#participantLimit').value=this.value;">
                 </div><br>
                 <h1>투표 항목을 만들어보세요.</h1>
                 <div id="voteCandi-wrap">
