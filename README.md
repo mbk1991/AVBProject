@@ -59,52 +59,70 @@
 <li>Oracle DB</li>
 </ul><br>
 
-votiIng<br>
-<img src="https://user-images.githubusercontent.com/99261591/195728372-3346ecb9-d2bd-4ba5-ac2e-4fa5cc04ba36.png"><br><br>
 
-enroll<br>
-<img src="https://user-images.githubusercontent.com/99261591/195728374-d0f9631b-c182-4893-9aa6-78c61b62edde.png"><br><br>
+<h3>실행 화면</h3>
 
-enroll2<br>
-<img src="https://user-images.githubusercontent.com/99261591/195728376-ad409a87-ead1-45ef-9f51-35102e5e71fb.png"><br><br>
-
-enroll3<br>
-<img src="https://user-images.githubusercontent.com/99261591/195728382-6181ff24-d01c-42fa-8d7a-5e72b57ff538.png"><br><br>
-
-enroll4<br>
-<img src="https://user-images.githubusercontent.com/99261591/195728384-403b77e4-553e-48f9-99f3-a74e5e67ce5c.png"><br><br>
-
-listFilter1<br>
-<img src="https://user-images.githubusercontent.com/99261591/195728385-bd70fdda-f146-41de-89e7-76edb77dd616.png"><br><br>
-
-login<br>
+<h2>로그인 화면</h2>
 <img src="https://user-images.githubusercontent.com/99261591/195728386-47c4b28f-ec67-494e-bf14-f0c4599d921b.png"><br><br>
 
-nick1<br>
+
+
+
+
+
+<h2>회원가입 4</h2>
+<img src="https://user-images.githubusercontent.com/99261591/195728374-d0f9631b-c182-4893-9aa6-78c61b62edde.png"><br><br>
+
+<h2>회원가입 3</h2>
+<img src="https://user-images.githubusercontent.com/99261591/195728376-ad409a87-ead1-45ef-9f51-35102e5e71fb.png"><br><br>
+
+<h2>회원가입 2</h2>
+<img src="https://user-images.githubusercontent.com/99261591/195728382-6181ff24-d01c-42fa-8d7a-5e72b57ff538.png"><br><br>
+
+<h2>회원가입 1</h2>
+<img src="https://user-images.githubusercontent.com/99261591/195728384-403b77e4-553e-48f9-99f3-a74e5e67ce5c.png"><br><br>
+
+
+
+
+
+
+
+<h2>닉네임 선택 5</h2>
 <img src="https://user-images.githubusercontent.com/99261591/195728389-3e82a76d-dd76-482c-9f8e-a67d56ea9cc1.png"><br><br>
 
-nick2<br>
+<h2>닉네임 선택 4</h2>
 <img src="https://user-images.githubusercontent.com/99261591/195728392-b2bb2cf8-6b7e-4302-8970-51e9115f2259.png"><br><br>
 
-nick3<br>
+<h2>닉네임 선택 3</h2>
 <img src="https://user-images.githubusercontent.com/99261591/195728394-1ddd3d3d-f692-425a-809b-9c1c58d5bae4.png"><br><br>
 
-nick4<br>
+<h2>닉네임 선택 2</h2>
 <img src="https://user-images.githubusercontent.com/99261591/195728397-3fa66a42-2dd9-46bb-90aa-0f87462fd960.png"><br><br>
 
-nick5<br>
+<h2>닉네임 선택 1</h2>
 <img src="https://user-images.githubusercontent.com/99261591/195728398-73190657-14a3-40ef-b3f8-56ed6c4b846e.png"><br><br>
 
-voteComplete<br>
-<img src="https://user-images.githubusercontent.com/99261591/195728399-f109c5d6-80ac-414e-a41e-f06c37fe08a6.png"><br><br>
 
-voteList<br>
-<img src="https://user-images.githubusercontent.com/99261591/195728401-e0cfe6aa-7fdd-4570-a3af-6e5a343e8b6b.png"><br><br>
 
-voteMine<br>
-<img src="https://user-images.githubusercontent.com/99261591/195728402-cfe47a7b-1f52-4470-9cee-6a9136416d8a.png"><br><br>
-
-voteRegister<br>
+<h2>투표 작성</h2>
 <img src="https://user-images.githubusercontent.com/99261591/195728403-04d499bb-b3c0-4402-aa7f-606f1d388012.png"><br><br>
 
 
+<h2>진행중인 투표</h2>
+<img src="https://user-images.githubusercontent.com/99261591/195728372-3346ecb9-d2bd-4ba5-ac2e-4fa5cc04ba36.png" ><br><br>
+
+
+<h2>내가 투표한 투표</h2>
+<img src="https://user-images.githubusercontent.com/99261591/195728402-cfe47a7b-1f52-4470-9cee-6a9136416d8a.png"><br><br>
+
+<h2>투표 완료 (댓글 오픈)</h2>
+<img src="https://user-images.githubusercontent.com/99261591/195728399-f109c5d6-80ac-414e-a41e-f06c37fe08a6.png"><br><br>
+
+
+
+<h2>투표 목록 </h2>
+<img src="https://user-images.githubusercontent.com/99261591/195728401-e0cfe6aa-7fdd-4570-a3af-6e5a343e8b6b.png"><br><br>
+
+<h2>투표 목록 필터</h2>
+<img src="https://user-images.githubusercontent.com/99261591/195728385-bd70fdda-f146-41de-89e7-76edb77dd616.png"><br><br>
