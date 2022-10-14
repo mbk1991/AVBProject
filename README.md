@@ -70,38 +70,41 @@
 
 
 
-<h2>회원가입 4</h2>
-<img src="https://user-images.githubusercontent.com/99261591/195728374-d0f9631b-c182-4893-9aa6-78c61b62edde.png"><br><br>
-
-<h2>회원가입 3</h2>
-<img src="https://user-images.githubusercontent.com/99261591/195728376-ad409a87-ead1-45ef-9f51-35102e5e71fb.png"><br><br>
+<h2>회원가입 1</h2>
+<img src="https://user-images.githubusercontent.com/99261591/195728384-403b77e4-553e-48f9-99f3-a74e5e67ce5c.png"><br><br>
 
 <h2>회원가입 2</h2>
 <img src="https://user-images.githubusercontent.com/99261591/195728382-6181ff24-d01c-42fa-8d7a-5e72b57ff538.png"><br><br>
 
-<h2>회원가입 1</h2>
-<img src="https://user-images.githubusercontent.com/99261591/195728384-403b77e4-553e-48f9-99f3-a74e5e67ce5c.png"><br><br>
+<h2>회원가입 3</h2>
+<img src="https://user-images.githubusercontent.com/99261591/195728376-ad409a87-ead1-45ef-9f51-35102e5e71fb.png"><br><br>
+
+
+
+<h2>회원가입 4</h2>
+<img src="https://user-images.githubusercontent.com/99261591/195728374-d0f9631b-c182-4893-9aa6-78c61b62edde.png"><br><br>
 
 
 
 
+<h2>닉네임 선택 1</h2>
+<img src="https://user-images.githubusercontent.com/99261591/195728398-73190657-14a3-40ef-b3f8-56ed6c4b846e.png"><br><br>
+
+<h2>닉네임 선택 2</h2>
+<img src="https://user-images.githubusercontent.com/99261591/195728397-3fa66a42-2dd9-46bb-90aa-0f87462fd960.png"><br><br>
+
+
+
+<h2>닉네임 선택 3</h2>
+<img src="https://user-images.githubusercontent.com/99261591/195728394-1ddd3d3d-f692-425a-809b-9c1c58d5bae4.png"><br><br>
+
+<h2>닉네임 선택 4</h2>
+<img src="https://user-images.githubusercontent.com/99261591/195728392-b2bb2cf8-6b7e-4302-8970-51e9115f2259.png"><br><br>
 
 
 
 <h2>닉네임 선택 5</h2>
 <img src="https://user-images.githubusercontent.com/99261591/195728389-3e82a76d-dd76-482c-9f8e-a67d56ea9cc1.png"><br><br>
-
-<h2>닉네임 선택 4</h2>
-<img src="https://user-images.githubusercontent.com/99261591/195728392-b2bb2cf8-6b7e-4302-8970-51e9115f2259.png"><br><br>
-
-<h2>닉네임 선택 3</h2>
-<img src="https://user-images.githubusercontent.com/99261591/195728394-1ddd3d3d-f692-425a-809b-9c1c58d5bae4.png"><br><br>
-
-<h2>닉네임 선택 2</h2>
-<img src="https://user-images.githubusercontent.com/99261591/195728397-3fa66a42-2dd9-46bb-90aa-0f87462fd960.png"><br><br>
-
-<h2>닉네임 선택 1</h2>
-<img src="https://user-images.githubusercontent.com/99261591/195728398-73190657-14a3-40ef-b3f8-56ed6c4b846e.png"><br><br>
 
 
 
