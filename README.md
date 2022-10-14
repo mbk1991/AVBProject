@@ -1,6 +1,8 @@
 <h1>AVBProject, 익명 투표 게시판</h1>
 <hr>
 
+<img src="https://user-images.githubusercontent.com/99261591/195733376-f59025f2-5a08-46f0-af7f-7a4111c921a3.png" >
+
 <h3>프로젝트 소개</h3>
 : 랜덤한 닉네임을 부여받아 익명으로 빠르고 간단하게 투표를 할 수 있는 게시판입니다.<br>
 
